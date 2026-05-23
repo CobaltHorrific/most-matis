@@ -1,0 +1,2233 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Matematika muzičke harmonije · Prva kragujevačka gimnazija</title>
+<link rel="icon" type="image/png" href="gimnazijaLogo.png" />
+<link rel="apple-touch-icon" href="gimnazijaLogo.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #F6F1E6;
+    --cream-2: #FBF7EE;
+    --paper: #FFFBF2;
+    --ink: #0E2E2E;
+    --ink-2: #2C4646;
+    --ink-3: #5D7373;
+    --ink-faint: #8C9C9C;
+    --teal: #1E8B89;
+    --teal-dark: #146362;
+    --teal-bright: #2DA8A6;
+    --mint: #DCEFE9;
+    --mint-2: #EAF5F1;
+    --lavender: #E8EAF6;
+    --lavender-2: #F1F2F9;
+    --peach: #FDEDDF;
+    --sand: #F4E9D4;
+    --crimson: #C25A4A;
+    --gold: #C19A4E;
+    --line: rgba(14,46,46,0.12);
+    --line-soft: rgba(14,46,46,0.06);
+    --serif: 'Fraunces', 'Cormorant Garamond', Georgia, serif;
+    --sans: 'Inter', system-ui, -apple-system, sans-serif;
+    --mono: 'JetBrains Mono', 'Courier New', monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    background: var(--cream);
+    color: var(--ink-2);
+    font-family: var(--sans);
+    font-weight: 400;
+    line-height: 1.6;
+    font-size: 21px;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* — soft paper grain — */
+  body::before {
+    content: '';
+    position: fixed; inset: 0; pointer-events: none; z-index: 0;
+    background-image:
+      radial-gradient(rgba(14,46,46,0.025) 1px, transparent 1px),
+      radial-gradient(rgba(14,46,46,0.018) 1px, transparent 1px);
+    background-size: 24px 24px, 8px 8px;
+    background-position: 0 0, 12px 12px;
+  }
+  main, nav, footer, section, header { position: relative; }
+  section { overflow: hidden; isolation: isolate; }
+  .topbar { z-index: 100; }
+
+  /* ═════ Per-section deco layer ═════ */
+  .deco-layer {
+    position: absolute; inset: 0;
+    pointer-events: none;
+    z-index: -1;
+    overflow: hidden;
+  }
+  .deco-symbol {
+    position: absolute;
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 400;
+    color: var(--ink);
+    opacity: 0.055;
+    user-select: none;
+    white-space: nowrap;
+    line-height: 1;
+  }
+  .deco-symbol.teal { color: var(--teal); opacity: 0.08; }
+  .deco-symbol.gold { color: var(--gold); opacity: 0.10; }
+  .deco-symbol.lila { color: #6B5BAE; opacity: 0.08; }
+  .deco-symbol.crimson { color: var(--crimson); opacity: 0.08; }
+  .deco-mono { font-family: var(--mono); font-style: normal; font-weight: 500; letter-spacing: 0.15em; }
+  .deco-svg { position: absolute; pointer-events: none; opacity: 0.12; }
+  .deco-svg.faint { opacity: 0.07; }
+  .deco-svg path, .deco-svg line, .deco-svg circle { fill: none; stroke: var(--ink); stroke-width: 1.2; }
+
+  section.tint-ink .deco-symbol { color: var(--cream); opacity: 0.07; }
+  section.tint-ink .deco-symbol.teal { color: var(--teal-bright); opacity: 0.13; }
+  section.tint-ink .deco-symbol.gold { color: var(--gold); opacity: 0.12; }
+  section.tint-ink .deco-svg path, section.tint-ink .deco-svg line, section.tint-ink .deco-svg circle { stroke: var(--cream); }
+
+  @keyframes float-slow {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-18px) rotate(1.5deg); }
+  }
+  @keyframes float-rev {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(14px) rotate(-2deg); }
+  }
+  @keyframes spin-slow {
+    to { transform: rotate(360deg); }
+  }
+  @keyframes pulse-fade {
+    0%, 100% { opacity: var(--base-op, 0.06); }
+    50% { opacity: calc(var(--base-op, 0.06) * 1.8); }
+  }
+  .deco-float { animation: float-slow 9s ease-in-out infinite; }
+  .deco-float-rev { animation: float-rev 11s ease-in-out infinite; }
+  .deco-spin { animation: spin-slow 60s linear infinite; transform-origin: center; }
+  .deco-pulse { animation: pulse-fade 6s ease-in-out infinite; }
+
+  /* ═════ Typography ═════ */
+  h1, h2, h3, h4 { color: var(--ink); font-family: var(--serif); font-weight: 500; letter-spacing: -0.02em; line-height: 1.1; }
+  h1 { font-size: clamp(3.4rem, 7.2vw, 6.4rem); font-weight: 400; }
+  h2 { font-size: clamp(2.7rem, 5vw, 4.2rem); font-weight: 400; line-height: 1.12; margin-bottom: 0.3em; }
+  h3 { font-size: clamp(1.7rem, 2.8vw, 2.4rem); font-weight: 500; margin: 2.2rem 0 0.7rem; color: var(--ink); }
+  p { color: var(--ink-2); margin-bottom: 1.1em; }
+  p strong { color: var(--ink); font-weight: 600; }
+  em, .italic { color: var(--teal); font-style: italic; font-family: var(--serif); font-weight: 400; }
+  h2 em, h1 em { font-size: 1.02em; }
+  .lead { font-family: var(--serif); font-style: italic; font-size: clamp(1.7rem, 2.6vw, 2.3rem); color: var(--ink); line-height: 1.45; font-weight: 400; }
+  .small { font-size: 1.05rem; color: var(--ink-faint); }
+  .caption { font-size: 1.1rem; color: var(--ink-3); text-align: center; margin-top: 1rem; font-style: italic; font-family: var(--serif); }
+
+  /* — hand-drawn underline for italic accent — */
+  .italic-accent { color: var(--teal); font-style: italic; font-family: var(--serif); position: relative; display: inline-block; }
+  .italic-accent::after {
+    content: '';
+    position: absolute; left: 0; right: 0; bottom: -0.08em; height: 0.5em;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 12' preserveAspectRatio='none'%3E%3Cpath d='M2 8 C 40 2, 80 11, 120 5 S 180 9, 198 4' stroke='%231E8B89' stroke-width='1.6' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat center / 100% 100%;
+    opacity: 0.85;
+  }
+
+  /* ═════ Layout ═════ */
+  section { padding: 6rem 2.5rem; }
+  .container { max-width: 1240px; margin: 0 auto; width: 100%; }
+  .narrow { max-width: 960px; margin: 0 auto; width: 100%; }
+
+  .eyebrow {
+    font-family: var(--mono); font-size: 0.95rem;
+    letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--teal); margin-bottom: 1.4em;
+    display: inline-block;
+  }
+
+  /* ═════ Pill button (general) ═════ */
+  .pill {
+    display: inline-flex; align-items: center; gap: 0.5em;
+    padding: 0.65em 1.4em;
+    border-radius: 999px;
+    background: var(--mint);
+    border: 1px solid var(--teal);
+    color: var(--ink);
+    font-size: 0.88rem;
+    font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    font-family: var(--sans);
+  }
+  .pill:hover { background: var(--teal); color: var(--paper); transform: translateY(-1px); }
+  .pill.outline { background: transparent; border-color: var(--line); color: var(--ink); }
+  .pill.outline:hover { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+
+  /* ═════ Menu button (burger / X) ═════ */
+  .menu-btn {
+    position: fixed;
+    top: 1.4rem; right: 1.4rem;
+    width: 54px; height: 54px;
+    background: var(--ink);
+    color: var(--cream);
+    border: 1px solid var(--ink);
+    border-radius: 14px;
+    cursor: pointer;
+    display: grid; place-items: center;
+    z-index: 250;
+    transition: background 0.3s ease, transform 0.25s ease, box-shadow 0.3s ease;
+    box-shadow: 0 8px 24px rgba(14,46,46,0.18);
+    padding: 0;
+  }
+  .menu-btn:hover { background: var(--teal); transform: translateY(-2px); box-shadow: 0 12px 30px rgba(14,46,46,0.25); }
+  .menu-btn.open { background: var(--teal); box-shadow: 0 12px 36px rgba(30,139,137,0.35); }
+
+  .burger {
+    position: relative;
+    width: 22px; height: 14px;
+    pointer-events: none;
+  }
+  .burger span {
+    position: absolute; left: 0;
+    width: 100%; height: 2px;
+    background: currentColor;
+    border-radius: 999px;
+    transform-origin: center;
+    transition: top 0.3s ease 0.12s, bottom 0.3s ease 0.12s, transform 0.3s ease, opacity 0.15s ease;
+  }
+  .burger span:nth-child(1) { top: 0; }
+  .burger span:nth-child(2) { top: 50%; transform: translateY(-50%); }
+  .burger span:nth-child(3) { bottom: 0; }
+  .menu-btn.open .burger span:nth-child(1) {
+    top: 6px;
+    transform: rotate(45deg);
+    transition: top 0.25s ease, transform 0.3s ease 0.18s;
+  }
+  .menu-btn.open .burger span:nth-child(2) {
+    opacity: 0; transform: translateY(-50%) scaleX(0);
+  }
+  .menu-btn.open .burger span:nth-child(3) {
+    bottom: 6px;
+    transform: rotate(-45deg);
+    transition: bottom 0.25s ease, transform 0.3s ease 0.18s;
+  }
+
+  /* ═════ Backdrop ═════ */
+  .menu-backdrop {
+    position: fixed; inset: 0;
+    background: rgba(14,46,46,0.45);
+    backdrop-filter: blur(10px) saturate(120%);
+    -webkit-backdrop-filter: blur(10px) saturate(120%);
+    z-index: 180;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+  }
+  .menu-backdrop.open { opacity: 1; pointer-events: auto; }
+
+  /* ═════ Menu panel ═════ */
+  .menu-panel {
+    position: fixed;
+    top: 1.4rem; right: 1.4rem;
+    width: 380px;
+    max-width: calc(100vw - 2.8rem);
+    max-height: calc(100vh - 2.8rem);
+    background: var(--ink);
+    color: var(--cream);
+    border-radius: 22px;
+    padding: 5.2rem 1.6rem 1.6rem;
+    z-index: 200;
+    box-shadow: 0 30px 80px rgba(14,46,46,0.4);
+    transform-origin: top right;
+    transform: scale(0.25) translate(20px, -20px);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 0.45s cubic-bezier(0.34, 1.5, 0.64, 1), opacity 0.3s ease;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+  .menu-panel.open {
+    transform: scale(1) translate(0,0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+  /* subtle decorative accent in corner */
+  .menu-panel::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 90px; height: 90px;
+    background: radial-gradient(circle at top right, rgba(30,139,137,0.5), transparent 70%);
+    border-top-right-radius: 22px;
+    pointer-events: none;
+  }
+  .menu-eyebrow {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--teal-bright);
+    margin-bottom: 1.2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(255,255,255,0.10);
+    position: relative;
+  }
+  .menu-list {
+    display: flex; flex-direction: column;
+  }
+  .menu-list a {
+    display: flex; align-items: baseline;
+    gap: 1.2rem;
+    padding: 0.85rem 0.6rem;
+    color: var(--cream);
+    text-decoration: none;
+    font-family: var(--serif);
+    font-size: 1.18rem;
+    font-weight: 400;
+    border-radius: 8px;
+    transition: background 0.2s ease, color 0.2s ease, padding 0.25s ease;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    position: relative;
+  }
+  .menu-list a:last-child { border-bottom: 0; }
+  .menu-list a:hover, .menu-list a:focus-visible {
+    background: rgba(255,255,255,0.06);
+    color: var(--teal-bright);
+    padding-left: 1.1rem;
+    outline: none;
+  }
+  .menu-list a .i {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    color: var(--teal-bright);
+    opacity: 0.55;
+    min-width: 22px;
+    transition: opacity 0.2s ease;
+  }
+  .menu-list a:hover .i { opacity: 1; }
+  .menu-list a .arrow {
+    margin-left: auto;
+    color: var(--teal-bright);
+    opacity: 0;
+    transform: translateX(-6px);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    font-size: 1.1rem;
+  }
+  .menu-list a:hover .arrow {
+    opacity: 1; transform: translateX(0);
+  }
+  .menu-footer {
+    margin-top: 1.4rem;
+    padding-top: 1.2rem;
+    border-top: 1px solid rgba(255,255,255,0.10);
+    text-align: center;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 0.95rem;
+    color: rgba(246,241,230,0.55);
+  }
+  .menu-footer .school-mono {
+    display: block; margin-top: 0.4rem;
+    font-family: var(--mono);
+    font-style: normal;
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(246,241,230,0.4);
+  }
+  body.menu-open { overflow: hidden; }
+
+  /* ═════ HERO ═════ */
+  .hero { padding: 5rem 2rem 7rem; text-align: center; position: relative; overflow: hidden; }
+  .hero-canvas {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    opacity: 0.55; pointer-events: none;
+  }
+  .hero-inner { position: relative; z-index: 2; max-width: 980px; margin: 0 auto; padding-top: 2rem; }
+  .hero h1 { margin: 0.5rem 0 1.5rem; }
+  .hero h1 .accent {
+    color: var(--teal); font-style: italic; font-family: var(--serif);
+    position: relative; display: inline-block;
+  }
+  .hero h1 .accent::after {
+    content: '';
+    position: absolute; left: 5%; right: 5%; bottom: -0.05em; height: 0.32em;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 14' preserveAspectRatio='none'%3E%3Cpath d='M2 10 C 60 2, 120 12, 180 6 S 280 11, 298 5' stroke='%231E8B89' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat center / 100% 100%;
+  }
+  .hero-sub {
+    font-family: var(--serif); font-size: clamp(1.35rem, 1.9vw, 1.7rem);
+    color: var(--ink-2); max-width: 740px; margin: 0 auto 2.5rem;
+    line-height: 1.55;
+  }
+  .hero-actions { display: flex; gap: 0.8rem; justify-content: center; flex-wrap: wrap; margin-bottom: 4rem; }
+  .hero-meta {
+    display: flex; gap: 3rem; justify-content: center; flex-wrap: wrap;
+    padding-top: 2.5rem; max-width: 900px; margin: 0 auto;
+    border-top: 1px solid var(--line-soft);
+  }
+  .hero-meta div { text-align: left; }
+  .hero-meta .label {
+    font-family: var(--mono); font-size: 0.82rem; letter-spacing: 0.25em;
+    text-transform: uppercase; color: var(--ink-faint); margin-bottom: 0.3em;
+  }
+  .hero-meta .value { font-family: var(--serif); font-size: 1.25rem; color: var(--ink); }
+
+  /* ═════ Section header ═════ */
+  .section-head { text-align: center; margin-bottom: 3.5rem; }
+  .section-head h2 { max-width: 800px; margin: 0 auto; }
+
+  /* ═════ Pastel cards ═════ */
+  .card {
+    border-radius: 18px;
+    padding: 2rem 2rem 2.2rem;
+    background: var(--mint-2);
+    border: 1px dashed transparent;
+  }
+  .card.mint { background: var(--mint-2); }
+  .card.lavender { background: var(--lavender-2); }
+  .card.peach { background: var(--peach); }
+  .card.sand { background: var(--sand); }
+  .card-grid {
+    display: grid; gap: 1.2rem;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    margin: 2.5rem 0;
+  }
+  .card h4 {
+    font-family: var(--serif); font-size: 1.6rem; color: var(--ink);
+    margin-bottom: 0.8rem; font-weight: 500;
+  }
+  .card p { color: var(--ink-2); font-size: 1.12rem; margin: 0; line-height: 1.55; }
+  .card .symbol {
+    font-family: var(--serif); font-style: italic;
+    font-size: 2.8rem; color: var(--teal);
+    line-height: 1; display: block; margin-bottom: 0.7rem;
+  }
+
+  /* ═════ Formula spotlight (the 3 sacred formulas) ═════ */
+  .spotlight {
+    margin: 4rem auto;
+    padding: 4rem 2.5rem;
+    background: var(--paper);
+    border-radius: 24px;
+    border: 1px solid var(--line);
+    text-align: center;
+    max-width: 820px;
+    position: relative;
+  }
+  .spotlight::before, .spotlight::after {
+    content: ''; position: absolute;
+    width: 60px; height: 60px;
+    border: 1px solid var(--teal);
+  }
+  .spotlight::before { top: -1px; left: -1px; border-right: 0; border-bottom: 0; border-top-left-radius: 24px; }
+  .spotlight::after { bottom: -1px; right: -1px; border-left: 0; border-top: 0; border-bottom-right-radius: 24px; }
+  .spotlight .tag {
+    display: inline-block;
+    font-family: var(--mono); font-size: 0.68rem;
+    letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--teal); padding: 0.5em 1.2em;
+    border: 1px solid var(--teal);
+    border-radius: 999px; margin-bottom: 1.5rem;
+  }
+  .spotlight .equation {
+    font-family: var(--serif);
+    font-size: clamp(2.5rem, 6.5vw, 4.5rem);
+    line-height: 1.05; color: var(--ink); font-weight: 400;
+    margin: 1rem 0 1.2rem;
+  }
+  .spotlight .equation .alt { color: var(--teal); font-style: normal; }
+  .spotlight .name {
+    font-family: var(--serif); font-style: italic;
+    color: var(--ink-2); font-size: 1.5rem;
+    margin-bottom: 1.2rem;
+  }
+  .spotlight .meaning {
+    color: var(--ink-2); max-width: 640px; margin: 0 auto;
+    font-size: 1.18rem; line-height: 1.6;
+  }
+
+  /* ═════ Inline math (upright — never italic) ═════ */
+  .math { font-family: var(--serif); font-style: normal; color: var(--teal-dark); font-size: 1.06em; }
+  .frac {
+    display: inline-flex; flex-direction: column; vertical-align: middle;
+    text-align: center; margin: 0 0.12em; font-style: normal;
+    font-size: 0.82em; line-height: 1.1;
+  }
+  .frac .num { border-bottom: 1.5px solid currentColor; padding: 0 0.32em 0.05em; }
+  .frac .den { padding: 0.05em 0.32em 0; }
+  sup, sub { font-size: 0.7em; line-height: 0; }
+
+  /* ═════ Radical √ — the vinculum (bar) covers the whole radicand ═════ */
+  .sqrt {
+    display: inline-flex;
+    align-items: flex-start;
+    font-style: normal;
+    white-space: nowrap;
+    line-height: 1;
+  }
+  .sqrt > .idx {
+    font-size: 0.56em;
+    line-height: 1;
+    align-self: flex-start;
+    transform: translateY(-0.12em);
+    margin-right: -0.34em;
+    z-index: 1;
+  }
+  .sqrt > .sgn {
+    font-size: 1.18em;
+    line-height: 0.86;
+    transform: translateY(-0.04em);
+  }
+  .sqrt > .rad {
+    border-top: 0.085em solid currentColor;
+    padding: 0.12em 0.22em 0 0.08em;
+    margin-left: -0.06em;
+  }
+
+  .display-eq {
+    text-align: center; margin: 1.8rem auto;
+    padding: 1.5rem 1.6rem; max-width: 760px;
+    font-family: var(--serif); font-style: normal;
+    font-size: 1.95rem; color: var(--ink);
+    background: var(--cream-2); border-radius: 12px;
+    border-left: 4px solid var(--teal);
+  }
+  .display-eq.err {
+    border-left-color: var(--crimson);
+    color: var(--crimson);
+  }
+
+  /* ═════ Quote ═════ */
+  .quote {
+    font-family: var(--serif); font-size: clamp(1.7rem, 2.6vw, 2.3rem);
+    color: var(--ink); line-height: 1.4; font-style: italic;
+    text-align: center; max-width: 860px; margin: 3rem auto 0;
+    font-weight: 400;
+  }
+  .quote::before {
+    content: ''; display: block; width: 40px; height: 2px;
+    background: var(--teal); margin: 0 auto 1.5rem;
+  }
+
+  /* ═════ Tables ═════ */
+  .tbl-wrap { overflow-x: auto; margin: 2rem 0; border-radius: 14px; background: var(--paper); border: 1px solid var(--line-soft); }
+  table { width: 100%; border-collapse: collapse; font-family: var(--sans); font-size: 1.18rem; }
+  th, td { padding: 1rem 1.2rem; text-align: left; }
+  th {
+    font-family: var(--mono); font-size: 0.86rem;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--teal); font-weight: 500;
+    border-bottom: 1px solid var(--line);
+  }
+  td { color: var(--ink-2); border-bottom: 1px solid var(--line-soft); }
+  td:first-child { color: var(--ink); font-weight: 500; }
+  tbody tr:last-child td { border-bottom: 0; }
+  tbody tr:hover { background: var(--mint-2); }
+  td .math { font-family: var(--mono); font-style: normal; font-size: 1em; color: var(--teal-dark); }
+
+  /* ═════ Visual frames ═════ */
+  .visual {
+    background: var(--paper);
+    border: 1px solid var(--line-soft);
+    border-radius: 18px;
+    padding: 2rem;
+    margin: 2.5rem 0;
+  }
+  .visual canvas, .visual svg { display: block; width: 100%; height: auto; max-width: 100%; }
+
+  /* ═════ Actions row ═════ */
+  .actions { display: flex; gap: 0.6rem; justify-content: center; flex-wrap: wrap; margin: 1.5rem 0 0; }
+
+  /* ═════ Reveal anim ═════ */
+  .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.in { opacity: 1; transform: translateY(0); }
+
+  /* ═════ Footer ═════ */
+  footer {
+    background: var(--ink); color: var(--cream);
+    padding: 3rem 2rem;
+    text-align: center;
+  }
+  footer .signature { font-family: var(--serif); font-style: italic; font-size: 1.4rem; color: var(--cream); margin-bottom: 0.4rem; }
+  footer .school { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.28em; color: rgba(246,241,230,0.55); text-transform: uppercase; }
+  footer .mentor { color: rgba(246,241,230,0.5); font-size: 0.85rem; margin-top: 1.5rem; }
+
+  /* ═════ Two-column ═════ */
+  .split { display: grid; grid-template-columns: 1.1fr 1fr; gap: 3rem; align-items: center; }
+  @media (max-width: 800px) {
+    .split { grid-template-columns: 1fr; gap: 2rem; }
+    section { padding: 5rem 1.5rem; }
+    .spotlight { padding: 3rem 1.5rem; }
+  }
+
+  /* ═════ Color-coded background sections ═════ */
+  section.tint-mint { background: linear-gradient(180deg, var(--mint-2) 0%, var(--cream) 100%); }
+  section.tint-lavender { background: linear-gradient(180deg, var(--lavender-2) 0%, var(--cream) 100%); }
+  section.tint-peach { background: linear-gradient(180deg, var(--peach) 0%, var(--cream) 100%); }
+  section.tint-ink { background: var(--ink); color: var(--cream); }
+  section.tint-ink h2, section.tint-ink h3, section.tint-ink h4 { color: var(--cream); }
+  section.tint-ink p { color: rgba(246,241,230,0.78); }
+  section.tint-ink p strong { color: var(--cream); }
+  section.tint-ink .lead { color: var(--cream); }
+  section.tint-ink em, section.tint-ink .italic { color: var(--teal-bright); }
+  section.tint-ink .math { color: var(--teal-bright); }
+  section.tint-ink .display-eq { background: rgba(255,255,255,0.04); color: var(--cream); border-color: var(--teal-bright); }
+  section.tint-ink .visual { background: rgba(255,255,255,0.03); border-color: rgba(255,255,255,0.08); }
+  section.tint-ink .tbl-wrap { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.08); }
+  section.tint-ink td { color: rgba(246,241,230,0.78); border-color: rgba(255,255,255,0.06); }
+  section.tint-ink th { color: var(--teal-bright); border-color: rgba(255,255,255,0.15); }
+  section.tint-ink td:first-child { color: var(--cream); }
+  section.tint-ink .quote { color: var(--cream); }
+  section.tint-ink .caption { color: rgba(246,241,230,0.55); }
+
+  /* ═════ Logo badge (grb gimnazije) ═════ */
+  .logo-badge {
+    display: grid; place-items: center;
+    background: #fff; border-radius: 50%;
+    overflow: hidden;
+    box-shadow: 0 8px 26px rgba(14,46,46,0.14);
+    border: 1px solid rgba(14,46,46,0.06);
+  }
+  .logo-badge img { width: 100%; height: 100%; object-fit: contain; padding: 9%; }
+  .hero-logo { width: clamp(116px, 13vw, 168px); aspect-ratio: 1; margin: 0 auto 1.8rem; }
+  footer .footer-logo { width: 84px; aspect-ratio: 1; margin: 0 auto 1.4rem; }
+
+  /* ═════ Theorem / Proof blocks (rigorous, TV-legible) ═════ */
+  .theorem {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-left: 5px solid var(--teal);
+    border-radius: 16px;
+    padding: 2rem 2.3rem;
+    margin: 2rem auto;
+    max-width: 1000px;
+    text-align: left;
+  }
+  .theorem .th-label {
+    font-family: var(--mono); font-size: 0.92rem; letter-spacing: 0.22em;
+    text-transform: uppercase; color: var(--teal);
+    display: block; margin-bottom: 0.7rem;
+  }
+  .theorem .th-statement {
+    font-family: var(--serif); font-size: 1.5rem; color: var(--ink);
+    margin-bottom: 0.4rem; line-height: 1.4;
+  }
+  .theorem .th-why {
+    font-size: 1.08rem; color: var(--ink-3); margin: 0.9rem 0 0;
+    border-top: 1px dashed var(--line); padding-top: 0.9rem;
+  }
+  .proof { margin-top: 1.4rem; }
+  .proof .pf-label {
+    font-family: var(--mono); font-size: 0.82rem; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--ink-faint);
+    display: block; margin-bottom: 0.9rem;
+  }
+  .proof ol { list-style: none; counter-reset: step; padding: 0; margin: 0; }
+  .proof ol > li {
+    counter-increment: step;
+    position: relative;
+    padding: 0.6rem 0 0.6rem 3.2rem;
+    font-size: 1.18rem;
+    line-height: 1.55;
+    color: var(--ink-2);
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .proof ol > li:last-child { border-bottom: 0; }
+  .proof ol > li::before {
+    content: counter(step);
+    position: absolute; left: 0; top: 0.55rem;
+    width: 2.1rem; height: 2.1rem;
+    display: grid; place-items: center;
+    font-family: var(--mono); font-size: 0.92rem; font-weight: 500;
+    color: var(--teal); background: var(--mint-2);
+    border: 1px solid var(--teal); border-radius: 50%;
+  }
+  .proof ol > li strong { color: var(--ink); }
+  .qed {
+    display: inline-block; margin-left: 0.45em;
+    color: var(--teal); font-weight: 700; font-size: 1.2em;
+  }
+  .pf-concl {
+    margin-top: 1.1rem; padding-top: 1rem;
+    border-top: 1px dashed var(--line);
+    font-size: 1.1rem; color: var(--ink);
+  }
+  .pf-concl strong { color: var(--ink); }
+  section.tint-ink .theorem { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.1); border-left-color: var(--teal-bright); }
+  section.tint-ink .theorem .th-statement { color: var(--cream); }
+  section.tint-ink .proof ol > li { color: rgba(246,241,230,0.82); border-color: rgba(255,255,255,0.08); }
+  section.tint-ink .proof ol > li::before { background: rgba(255,255,255,0.06); }
+
+  @media (max-width: 900px) {
+    section { padding: 4rem 1.4rem; }
+    body { font-size: 18px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ─── Menu button + dropdown panel ─── -->
+<button class="menu-btn" id="menuBtn" aria-label="Otvori meni" aria-expanded="false" aria-controls="menuPanel">
+  <span class="burger"><span></span><span></span><span></span></span>
+</button>
+
+<div class="menu-backdrop" id="menuBackdrop" aria-hidden="true"></div>
+
+<aside class="menu-panel" id="menuPanel" aria-hidden="true" aria-label="Sekcije rada">
+  <div class="menu-eyebrow">— Sekcije rada —</div>
+  <nav class="menu-list">
+    <a href="#top"><span class="i">00</span><span>Početak</span><span class="arrow">→</span></a>
+    <a href="#uvod"><span class="i">01</span><span>Uvod</span><span class="arrow">→</span></a>
+    <a href="#alati"><span class="i">02</span><span>Teorijska osnova</span><span class="arrow">→</span></a>
+    <a href="#pitagora"><span class="i">03</span><span>Pitagorejci i monohord</span><span class="arrow">→</span></a>
+    <a href="#intervali"><span class="i">04</span><span>Muzički intervali</span><span class="arrow">→</span></a>
+    <a href="#skala"><span class="i">05</span><span>Pitagorejska skala</span><span class="arrow">→</span></a>
+    <a href="#koma"><span class="i">06</span><span>Pitagorejska koma</span><span class="arrow">→</span></a>
+    <a href="#fizika"><span class="i">07</span><span>Fizika zvuka</span><span class="arrow">→</span></a>
+    <a href="#obertoni"><span class="i">08</span><span>Stojeći talasi i obertoni</span><span class="arrow">→</span></a>
+    <a href="#konsonanca"><span class="i">09</span><span>Konsonanca i disonanca</span><span class="arrow">→</span></a>
+    <a href="#temperament"><span class="i">10</span><span>Temperovano ugađanje</span><span class="arrow">→</span></a>
+    <a href="#dokazi"><span class="i">11</span><span>Iracionalnost ¹²√2</span><span class="arrow">→</span></a>
+    <a href="#furije"><span class="i">12</span><span>Furijeova analiza</span><span class="arrow">→</span></a>
+    <a href="#akord"><span class="i">13</span><span>C-dur akord</span><span class="arrow">→</span></a>
+    <a href="#zakljucak"><span class="i">14</span><span>Zaključak</span><span class="arrow">→</span></a>
+    <a href="#literatura"><span class="i">15</span><span>Literatura</span><span class="arrow">→</span></a>
+  </nav>
+  <div class="menu-footer">
+    Prva kragujevačka gimnazija
+    <span class="school-mono">Maj mesec matematike · 2026</span>
+  </div>
+</aside>
+
+<!-- ─── HERO ─── -->
+<section class="hero" id="top">
+  <canvas class="hero-canvas" id="heroCanvas"></canvas>
+  <div class="deco-layer">
+    <span class="deco-symbol teal deco-pulse" style="top: 14%; left: 7%; font-size: 2rem;">✦</span>
+    <span class="deco-symbol gold deco-pulse" style="top: 22%; right: 10%; font-size: 1.4rem; animation-delay: 1.5s;">✧</span>
+    <span class="deco-symbol deco-pulse" style="bottom: 28%; left: 12%; font-size: 1.2rem; animation-delay: 3s;">✶</span>
+    <span class="deco-symbol teal deco-pulse" style="bottom: 18%; right: 14%; font-size: 1.8rem; animation-delay: 2s;">✦</span>
+    <span class="deco-symbol gold deco-float" style="top: 30%; right: 20%; font-size: 3rem;">◇</span>
+    <span class="deco-symbol deco-float-rev" style="bottom: 35%; left: 18%; font-size: 2.4rem;">◇</span>
+  </div>
+  <div class="hero-inner">
+    <div class="logo-badge hero-logo"><img src="gimnazijaLogo.png" alt="Grb Prve kragujevačke gimnazije" onerror="this.closest('.logo-badge').style.display='none'" /></div>
+    <div class="eyebrow">Maturski rad iz matematike · 2026</div>
+    <h1>Matematika muzičke <span class="accent">harmonije</span></h1>
+    <p class="hero-sub">Od pitagorejskih razlomaka do Furijeovih koeficijenata — matematika onoga što čujemo kao lepo.</p>
+    <div class="hero-actions">
+      <a href="#uvod" class="pill">Počni prezentaciju</a>
+      <a href="#akord" class="pill outline">Skoči na C-dur akord</a>
+    </div>
+    <div class="hero-meta">
+      <div style="text-align: center;">
+        <div class="label">Učenik</div>
+        <div class="value">Sava Ćuković</div>
+      </div>
+      <div style="text-align: center;">
+        <div class="label">Mentor</div>
+        <div class="value">Marija Rafajlović Stojković</div>
+      </div>
+      <div style="text-align: center;">
+        <div class="label">Škola</div>
+        <div class="value">Prva kragujevačka gimnazija</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ UVOD ═══════════════ -->
+<section id="uvod">
+  <div class="deco-layer">
+    <span class="deco-symbol deco-float" style="top: 10%; left: 5%; font-size: 9rem;">♪</span>
+    <span class="deco-symbol teal deco-float-rev" style="bottom: 12%; right: 6%; font-size: 11rem;">♫</span>
+    <span class="deco-symbol gold" style="top: 50%; right: 12%; font-size: 5rem;">𝄞</span>
+    <span class="deco-symbol deco-mono" style="top: 30%; left: 70%; font-size: 0.9rem; opacity: 0.08;">Πυθαγόρας · ΑΡΜΟΝΙΑ</span>
+    <span class="deco-symbol lila deco-pulse" style="bottom: 30%; left: 15%; font-size: 1.6rem;">✦</span>
+  </div>
+  <div class="narrow reveal">
+    <div class="eyebrow">— Uvod —</div>
+    <h2>Veza muzike i matematike spada među <span class="italic-accent">najstarije poznate</span> u istoriji nauke.</h2>
+    <p style="margin-top: 2rem;">U šestom veku pre nove ere, Pitagora je primetio da prijatni intervali nastaju kada su dužine žica u <strong>odnosu malih celih brojeva</strong>. Otvara se pitanje: <em>koliko daleko seže matematika iza onoga što čujemo kao lepo?</em></p>
+    <p>Predmet rada: <strong>harmonija kao sistem merljivih relacija</strong> između frekvencija, koje se izvode iz fizike zvuka i teorije brojeva.</p>
+    <p>Centralni problem: <strong>nesamerljivost kvinte i oktave</strong>. Dvanaest čistih kvinti ne stiže do polazne oktave, već promaši za mali iznos — <strong>pitagorejsku komu</strong>. Rešenje je <strong>jednako temperovano ugađanje</strong>, sistem zasnovan na iracionalnom broju <span class="math"><span class="sqrt"><span class="idx">12</span><span class="sgn">√</span><span class="rad">2</span></span></span>.</p>
+    <p class="lead" style="margin: 2rem 0 1rem;">Matematika, fizika i muzika nisu tri discipline koje se ponekad dodiruju — to su <em>tri perspektive istog fenomena</em>.</p>
+    <p>Svaki akord sadrži pitagorejske razlomke, Furijeove koeficijente i logaritamske odnose.</p>
+  </div>
+</section>
+
+<!-- ═══════════════ TEORIJSKA OSNOVA ═══════════════ -->
+<section class="tint-mint" id="alati">
+  <div class="deco-layer">
+    <span class="deco-symbol deco-float" style="top: 8%; right: 5%; font-size: 11rem;">π</span>
+    <span class="deco-symbol teal deco-float-rev" style="bottom: 10%; left: 4%; font-size: 9rem;">√</span>
+    <span class="deco-symbol gold" style="top: 45%; left: 8%; font-size: 6rem;">Σ</span>
+    <span class="deco-symbol deco-mono" style="top: 15%; left: 50%; font-size: 1rem; opacity: 0.06;">log₂ · ln · log₁₀</span>
+    <span class="deco-symbol lila deco-pulse" style="bottom: 35%; right: 18%; font-size: 4rem;">∞</span>
+    <span class="deco-symbol deco-float-rev" style="top: 65%; right: 30%; font-size: 3rem;">½</span>
+  </div>
+  <div class="container reveal">
+    <div class="section-head">
+      <div class="eyebrow">— I · Teorijska osnova —</div>
+      <h2>Matematički <span class="italic-accent">alati</span></h2>
+    </div>
+
+    <p class="narrow" style="text-align: center; margin-bottom: 2rem;">Četiri ključna alata: <strong>razlomci, geometrijski nizovi, logaritamska funkcija i iracionalnost</strong>.</p>
+
+    <h3>Razlomci i odnosi celih brojeva</h3>
+    <p>Razlomak <span class="math">a/b</span> izražava odnos dve frekvencije. Kvinta = <span class="math">3/2</span> znači: viši ton vibrira 1,5 puta brže od nižeg. <strong>Što su brojevi u skraćenom razlomku manji, interval zvuči čistije.</strong></p>
+    <p><strong>Množenje razlomaka = nadovezivanje intervala:</strong> kvinta (<span class="math">3/2</span>) + kvarta (<span class="math">4/3</span>) = <span class="math">3/2 · 4/3 = 2/1</span> = oktava.</p>
+
+    <h3>Geometrijski nizovi</h3>
+    <div class="theorem" style="margin: 1.5rem 0;">
+      <span class="th-label">Definicija</span>
+      <p class="th-statement" style="font-size: 1.25rem;">Geometrijski niz je niz brojeva u kome se svaki sledeći član dobija množenjem prethodnog konstantnim faktorom <span class="math">q</span>, koji se naziva količnik niza. Ako je prvi član <span class="math">a₁</span>, opšti član niza glasi:</p>
+      <div class="display-eq" style="margin: 1rem auto 0;">a<sub>n</sub> = a<sub>1</sub> · q<sup>n−1</sup></div>
+    </div>
+    <p>Uho ne čuje razlike frekvencija nego njihove odnose: skok 100→200 Hz i 1000→2000 Hz su <em>ista oktava</em>. <strong>Percepcija je multiplikativna, ne aditivna</strong> — zato je geometrijski niz prirodan model za tonsku skalu.</p>
+    <p>U temperovanom sistemu, polustepeni čine geometrijski niz sa <span class="math">q = <span class="sqrt"><span class="idx">12</span><span class="sgn">√</span><span class="rad">2</span></span> ≈ 1.05946</span>:</p>
+    <div class="display-eq">f<sub>n</sub> = f<sub>0</sub> · (<span class="sqrt"><span class="idx">12</span><span class="sgn">√</span><span class="rad">2</span></span>)<sup>n</sup></div>
+    <p>Nakon 12 koraka frekvencija se tačno udvostruči: <span class="math">(<span class="sqrt"><span class="idx">12</span><span class="sgn">√</span><span class="rad">2</span></span>)<sup>12</sup> = 2</span>.</p>
+
+    <h3>Logaritamska funkcija</h3>
+    <div class="theorem" style="margin: 1.5rem 0;">
+      <span class="th-label">Definicija</span>
+      <p class="th-statement" style="font-size: 1.25rem;">Neka je <span class="math">a &gt; 0, a ≠ 1</span>, i <span class="math">x &gt; 0</span>. Logaritam broja <span class="math">x</span> za osnovu <span class="math">a</span> jeste onaj eksponent <span class="math">y</span> za koji važi <span class="math">a<sup>y</sup> = x</span>. Zapisujemo:</p>
+      <div class="display-eq" style="margin: 1rem auto 0;">y = log<sub>a</sub>(x) ⟺ a<sup>y</sup> = x</div>
+    </div>
+    <p>Logaritam odgovara na pitanje: <em>na koji stepen treba podići <span class="math">a</span> da se dobije <span class="math">x</span>?</em></p>
+
+    <p><strong>Osnovna svojstva.</strong> Za <span class="math">x, y &gt; 0</span> i realan broj <span class="math">n</span>, važe:</p>
+    <div class="display-eq" style="font-size: 1.5rem; padding: 1.2rem;">
+      (L1) &nbsp; log<sub>a</sub>(x · y) = log<sub>a</sub>(x) + log<sub>a</sub>(y)<br>
+      (L2) &nbsp; log<sub>a</sub>(x / y) = log<sub>a</sub>(x) − log<sub>a</sub>(y)<br>
+      (L3) &nbsp; log<sub>a</sub>(x<sup>n</sup>) = n · log<sub>a</sub>(x)<br>
+      (L4) &nbsp; log<sub>a</sub>(a) = 1 &nbsp;&nbsp;&nbsp; (L5) &nbsp; log<sub>a</sub>(1) = 0
+    </div>
+    <p>Svojstvo (L1) je ključno za muziku: <strong>množenje prevodi u sabiranje</strong>. Muzičar nadovezivanje intervala doživljava kao sabiranje, dok se odnosi frekvencija matematički množe. Logaritam to pomiruje: <span class="math">log<sub>2</sub>(3/2) + log<sub>2</sub>(4/3) = log<sub>2</sub>(2) = 1</span>.</p>
+
+    <p><strong>Zašto osnova 2?</strong> Oktava = udvostručenje frekvencije, pa <span class="math">log<sub>2</sub>(2) = 1</span>. Interval sa odnosom <span class="math">r</span> iznosi <span class="math">log<sub>2</sub>(r)</span> oktava. Za kvintu:</p>
+    <div class="display-eq">log<sub>2</sub>(3/2) = log<sub>2</sub>(3) − log<sub>2</sub>(2) ≈ 1.585 − 1 = 0.585 oktava</div>
+    <p>Iz toga se izvodi <strong>cent</strong>: oktava = 1200 centi, a interval sa odnosom <span class="math">r</span> iznosi <span class="math">n = 1200 · log<sub>2</sub>(r)</span> centi.</p>
+
+    <h3>Iracionalni brojevi</h3>
+    <div class="theorem" style="margin: 1.5rem 0;">
+      <span class="th-label">Definicija</span>
+      <p class="th-statement" style="font-size: 1.25rem;">Realan broj je iracionalan ako se ne može zapisati u obliku <span class="math">p/q</span>, gde su <span class="math">p</span> i <span class="math">q</span> celi brojevi (<span class="math">q ≠ 0</span>). Iracionalni brojevi ne mogu se izraziti ni kao konačni ni kao periodični decimalni zapisi.</p>
+    </div>
+    <p>Pitagorejci su gradili harmoniju na razlomcima — verovali su da je svaki muzički odnos količnik dva cela broja. Temperovani polustepen <span class="math"><span class="sqrt"><span class="idx">12</span><span class="sgn">√</span><span class="rad">2</span></span></span> je <em>iracionalan</em>, što znači da moderna muzika počiva na osnovi koju bi oni smatrali nemogućom.</p>
+    <p><strong>Nesamerljivost:</strong> dva intervala su nesamerljiva ako ne postoji treći koji ih oba celobrojno meri. Pitagorejska koma nastaje upravo iz nesamerljivosti kvinte i oktave: ne postoje celi brojevi <span class="math">m, n</span> takvi da <span class="math">(3/2)<sup>m</sup> = 2<sup>n</sup></span>.</p>
+  </div>
+</section>
+
+<!-- ═══════════════ PITAGOREJCI ═══════════════ -->
+<section id="pitagora">
+  <div class="deco-layer">
+    <span class="deco-symbol teal deco-float" style="top: 8%; left: 6%; font-size: 9rem; font-style: normal;">3⁄2</span>
+    <span class="deco-symbol gold deco-float-rev" style="top: 12%; right: 7%; font-size: 7rem; font-style: normal;">4⁄3</span>
+    <span class="deco-symbol" style="bottom: 8%; left: 50%; font-size: 8rem; font-style: normal;">2⁄1</span>
+    <span class="deco-symbol deco-mono" style="top: 40%; right: 5%; font-size: 0.85rem; opacity: 0.06;">monos · chorde</span>
+    <span class="deco-symbol lila" style="bottom: 30%; left: 10%; font-size: 5rem;">Π</span>
+    <span class="deco-symbol teal deco-pulse" style="top: 55%; left: 80%; font-size: 1.4rem;">✦</span>
+    <span class="deco-symbol gold deco-pulse" style="bottom: 50%; left: 40%; font-size: 1.2rem; animation-delay: 2s;">✧</span>
+  </div>
+  <div class="container reveal">
+    <div class="section-head">
+      <div class="eyebrow">— II —</div>
+      <h2>Pitagorejci i <span class="italic-accent">monohord</span></h2>
+    </div>
+
+    <p>VI vek p. n. e., ostrvo Samos. Pitagora postavlja jedan od najranijih poznatih naučnih eksperimenata: odnos dužine žice i visine zvuka <strong>je matematički</strong>.</p>
+
+    <h3>Monohord</h3>
+    <p><strong>Monohord</strong> (grč. <em>monos</em>, jedan; <em>chorde</em>, žica): jedna zategnuta žica preko rezonantne kutije, sa pokretnim pragom. Pomeranjem praga menja se dužina slobodnog dela — i visina tona.</p>
+    <p>Rezultat: prijatni intervali nastaju kada su dužine vibrirajućih delova u <strong>odnosu malih celih brojeva</strong>.</p>
+
+    <div class="visual" style="margin-top: 2.2rem;">
+      <svg id="monochord" viewBox="0 0 800 240">
+        <defs>
+          <linearGradient id="boxGrad" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0" stop-color="#d4c8a8"/>
+            <stop offset="1" stop-color="#a89677"/>
+          </linearGradient>
+        </defs>
+        <rect x="50" y="155" width="700" height="60" rx="6" fill="url(#boxGrad)" stroke="#8a7654" stroke-width="0.8"/>
+        <rect x="50" y="155" width="700" height="6" fill="#8a7654" opacity="0.4"/>
+        <rect x="80" y="105" width="5" height="60" fill="#6b5a3f"/>
+        <rect x="715" y="105" width="5" height="60" fill="#6b5a3f"/>
+        <g id="bridge" transform="translate(400,0)">
+          <rect x="-2.5" y="100" width="5" height="65" fill="#1E8B89"/>
+          <polygon points="-7,100 7,100 0,93" fill="#1E8B89"/>
+        </g>
+        <path id="stringL" d="M 85 125 Q 242 125 400 125" stroke="#0E2E2E" stroke-width="1.5" fill="none"/>
+        <path id="stringR" d="M 400 125 Q 557 125 715 125" stroke="#5D7373" stroke-width="1.2" fill="none" opacity="0.35"/>
+        <text id="ratioLabel" x="400" y="230" fill="#5D7373" font-family="Fraunces" font-style="italic" font-size="14" text-anchor="middle">Pomeri pregradu — pritisni dugme</text>
+      </svg>
+      <div class="actions">
+        <button class="pill" onclick="setMonochord('oktava')">Oktava · 2/1</button>
+        <button class="pill" onclick="setMonochord('kvinta')">Kvinta · 3/2</button>
+        <button class="pill" onclick="setMonochord('kvarta')">Kvarta · 4/3</button>
+      </div>
+      <div class="caption">Monohord. Podela žice na 1/2, 2/3 i 3/4 dužine daje oktavu, kvintu i kvartu.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ MUZIČKI INTERVALI ═══════════════ -->
+<section class="tint-lavender" id="intervali">
+  <div class="deco-layer">
+    <span class="deco-symbol gold" style="top: 8%; left: 5%; font-size: 9rem; font-style: normal;">5</span>
+    <span class="deco-symbol teal deco-float" style="top: 14%; right: 8%; font-size: 8rem; font-style: normal;">7</span>
+    <span class="deco-symbol lila deco-float-rev" style="bottom: 12%; left: 10%; font-size: 8rem; font-style: normal;">12</span>
+    <span class="deco-symbol deco-mono" style="bottom: 30%; right: 8%; font-size: 0.9rem; opacity: 0.08;">f₁ / f₂ = L₂ / L₁</span>
+    <span class="deco-symbol crimson deco-pulse" style="top: 50%; left: 45%; font-size: 1.4rem;">✦</span>
+  </div>
+  <div class="container reveal">
+    <div class="section-head">
+      <div class="eyebrow">— III —</div>
+      <h2>Muzički <span class="italic-accent">intervali</span></h2>
+    </div>
+
+    <p><strong>Interval</strong> = rastojanje između dva tona, mereno <em>odnosom</em> frekvencija (ne razlikom). 200→300 Hz i 400→600 Hz su isti interval — oba su <span class="math">3/2</span>.</p>
+
+    <p><strong>Oktava</strong> je podeljena na <strong>12 polustepena</strong> (sve bele i crne dirke između jednog C i sledećeg C).</p>
+
+    <h3>Pitagorino otkriće</h3>
+    <p><strong>Intervali koji zvuče prijatno = dužine žica u odnosu malih celih brojeva.</strong></p>
+    <p>Polovina žice (<span class="math">1/2</span>) → oktava. Dve trećine (<span class="math">2/3</span>) → kvinta. Tri četvrtine (<span class="math">3/4</span>) → kvarta.</p>
+    <p>Frekvencija je <strong>obrnuto proporcionalna</strong> dužini žice:</p>
+    <div class="display-eq">f ∝ 1/L &nbsp;&nbsp;&nbsp; odnosno &nbsp;&nbsp;&nbsp; f<sub>1</sub>/f<sub>2</sub> = L<sub>2</sub>/L<sub>1</sub></div>
+
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Interval</th><th>Polustepeni</th><th>Odnos dužina</th><th>Odnos frekv.</th><th>Primer</th></tr></thead>
+        <tbody>
+          <tr><td>Unisono</td><td>0 (0 t)</td><td>1 : 1</td><td class="math">1/1</td><td>C → C</td></tr>
+          <tr><td>Čista kvarta</td><td>5 (2,5 t)</td><td>3 : 4</td><td class="math">4/3</td><td>C → F</td></tr>
+          <tr><td>Čista kvinta</td><td>7 (3,5 t)</td><td>2 : 3</td><td class="math">3/2</td><td>C → G</td></tr>
+          <tr><td>Oktava</td><td>12 (6 t)</td><td>1 : 2</td><td class="math">2/1</td><td>C → C′</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="caption">Pitagorejski intervali, izvedeni isključivo iz prostih brojeva 2 i 3.</p>
+
+    <p style="margin-top: 1.5rem;"><strong>Pravilo:</strong> manji brojevi u razlomku → čistiji i stabilniji interval. Oktava (<span class="math">2/1</span>) je najčistija, zatim kvinta (<span class="math">3/2</span>), pa kvarta (<span class="math">4/3</span>).</p>
+
+    <div class="card peach" style="margin-top: 2rem;">
+      <h4>Sintonička koma</h4>
+      <p>Intervali sa prostim brojem 5 (velika terca <span class="math">5/4</span>, velika seksta <span class="math">5/3</span>) <em>ne pripadaju pitagorejskom sistemu</em>, već <strong>čistom ugađanju</strong>. Pitagorejci su koristili samo proste brojeve 2 i 3. Razlika između pitagorejske velike terce (<span class="math">81/64</span>) i čiste (<span class="math">5/4</span>) iznosi oko <strong>21.5 centi</strong> — <strong>sintonička koma</strong>.</p>
+    </div>
+  </div>
+
+  <!-- ════ FORMULA 1 ════ -->
+  <div class="container">
+    <div class="spotlight reveal">
+      <div class="tag">I · Pitagorin razlomak</div>
+      <div class="equation"><span class="frac" style="font-size:0.85em"><span class="num">f₂</span><span class="den">f₁</span></span> = <span class="alt"><span class="frac" style="font-size:0.85em"><span class="num">3</span><span class="den">2</span></span></span></div>
+      <div class="name">Čista kvinta — odnos male celobrojne harmonije</div>
+      <p class="meaning">Iz nje, uzastopnim množenjem i svođenjem u oktavu, Pitagorejci su izgradili čitavu skalu. Istovremeno najtvrđa činjenica antičke harmonije <em>i izvor njenog najdubljeg problema.</em></p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ SKALA ═══════════════ -->
+<section id="skala">
+  <div class="deco-layer">
+    <span class="deco-symbol gold" style="top: 8%; left: 5%; font-size: 12rem;">𝄞</span>
+    <span class="deco-symbol teal deco-float" style="top: 18%; right: 8%; font-size: 4rem; font-style: normal;">C</span>
+    <span class="deco-symbol deco-float-rev" style="top: 30%; right: 18%; font-size: 4rem; font-style: normal;">D</span>
+    <span class="deco-symbol lila deco-float" style="top: 42%; right: 6%; font-size: 4rem; font-style: normal; animation-delay: 1s;">E</span>
+    <span class="deco-symbol deco-float-rev" style="bottom: 35%; right: 14%; font-size: 4rem; font-style: normal; animation-delay: 0.5s;">F</span>
+    <span class="deco-symbol teal" style="bottom: 22%; right: 4%; font-size: 4rem; font-style: normal;">G</span>
+    <span class="deco-symbol gold deco-float" style="bottom: 12%; right: 16%; font-size: 4rem; font-style: normal;">A</span>
+    <span class="deco-symbol" style="bottom: 4%; right: 8%; font-size: 4rem; font-style: normal;">B</span>
+    <span class="deco-symbol deco-mono" style="bottom: 18%; left: 8%; font-size: 0.85rem; opacity: 0.07;">T · T · L · T · T · T · L</span>
+    <span class="deco-symbol lila deco-pulse" style="top: 55%; left: 25%; font-size: 1.4rem;">✦</span>
+  </div>
+  <div class="container reveal">
+    <div class="section-head">
+      <div class="eyebrow">— IV —</div>
+      <h2>Konstrukcija <span class="italic-accent">pitagorejske skale</span></h2>
+    </div>
+
+    <p>Pitagorejci grade skalu samo iz <strong>oktave (<span class="math">2/1</span>) i čiste kvinte (<span class="math">3/2</span>)</strong>.</p>
+    <p><strong>Pravilo:</strong> polazimo od C, uzimamo uzastopne kvinte. Kad odnos pređe 2, delimo sa 2 (spuštamo za oktavu) da ostanemo u opsegu.</p>
+
+    <h3>Korak po korak</h3>
+    <p><strong>C (unisono):</strong> <span class="math">f<sub>C</sub> = f<sub>C</sub> × 1/1</span>. Referentna frekvencija od koje polazimo.</p>
+    <p><strong>G (čista kvinta):</strong> Jedna kvinta naviše od C daje <span class="math">f<sub>G</sub> = f<sub>C</sub> × 3/2</span>. Rezultat <span class="math">3/2 = 1.5</span> je manji od 2, pa ton G ostaje u okviru polazne oktave.</p>
+    <p><strong>D (velika sekunda):</strong> Kvinta naviše od G daje <span class="math">f<sub>D</sub> = f<sub>C</sub> × (3/2)² = f<sub>C</sub> × 9/4</span>. Rezultat <span class="math">9/4 = 2.25 &gt; 2</span> — D je iskočio iz polazne oktave. Spuštamo ga za jednu oktavu: <span class="math">f<sub>D</sub> = f<sub>C</sub> × 9/8</span>. Broj <span class="math">9/8</span> je <strong>pitagorejski ceo ton</strong>.</p>
+    <p><strong>A (velika seksta):</strong> Kvinta naviše od D: <span class="math">f<sub>A</sub> = f<sub>C</sub> × 9/8 × 3/2 = f<sub>C</sub> × 27/16</span>. Rezultat <span class="math">27/16 = 1.6875 &lt; 2</span>, ton A ostaje u opsegu.</p>
+    <p><strong>E (velika terca):</strong> Kvinta naviše od A: <span class="math">f<sub>E</sub> = f<sub>C</sub> × 27/16 × 3/2 = f<sub>C</sub> × 81/32</span>. Rezultat <span class="math">81/32 = 2.53125 &gt; 2</span>. Spuštamo za oktavu: <span class="math">f<sub>E</sub> = f<sub>C</sub> × 81/64</span>. Ovo je <strong>pitagorejska velika terca</strong>, nešto veća od čiste terce <span class="math">5/4 = 1.25</span>.</p>
+    <p><strong>B (velika septima):</strong> Kvinta naviše od E: <span class="math">f<sub>B</sub> = f<sub>C</sub> × 81/64 × 3/2 = f<sub>C</sub> × 243/128</span>. Rezultat <span class="math">243/128 ≈ 1.8984 &lt; 2</span>, B ostaje u opsegu.</p>
+    <p><strong>F (čista kvarta):</strong> Kvartu ne možemo dobiti kvintama naviše na jednostavan način. Umesto toga, idemo jednu kvintu <em>naniže</em> od C: <span class="math">f<sub>F</sub> = f<sub>C</sub> × 2/3</span>. Rezultat je ispod polazne oktave, pa podižemo za jednu oktavu: <span class="math">f<sub>F</sub> = f<sub>C</sub> × 4/3</span>. Ovo ujedno potvrđuje komplementarnost kvinte i kvarte: <span class="math">3/2 × 4/3 = 2/1</span> = oktava.</p>
+
+    <h3>Kompletna skala</h3>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Ton</th><th>Razlomak</th><th>Decimalno</th><th>Polust.</th><th>Korak od preth.</th></tr></thead>
+        <tbody>
+          <tr><td>C</td><td class="math">1/1</td><td>1.0000</td><td>0</td><td>—</td></tr>
+          <tr><td>D</td><td class="math">9/8</td><td>1.1250</td><td>2</td><td class="math">9/8 (ceo ton)</td></tr>
+          <tr><td>E</td><td class="math">81/64</td><td>1.2656</td><td>4</td><td class="math">9/8 (ceo ton)</td></tr>
+          <tr><td>F</td><td class="math">4/3</td><td>1.3333</td><td>5</td><td class="math">256/243 (limma)</td></tr>
+          <tr><td>G</td><td class="math">3/2</td><td>1.5000</td><td>7</td><td class="math">9/8 (ceo ton)</td></tr>
+          <tr><td>A</td><td class="math">27/16</td><td>1.6875</td><td>9</td><td class="math">9/8 (ceo ton)</td></tr>
+          <tr><td>B</td><td class="math">243/128</td><td>1.8984</td><td>11</td><td class="math">9/8 (ceo ton)</td></tr>
+          <tr><td>C′</td><td class="math">2/1</td><td>2.0000</td><td>12</td><td class="math">256/243 (limma)</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="caption">Kompletna pitagorejska C-dur skala sa koracima između susednih tonova.</p>
+
+    <p style="margin-top: 1.5rem;"><strong>Struktura skale:</strong> pet celih tonova (<span class="math">9/8</span>, oko 204 ct) i dve lime (<span class="math">256/243</span>, oko 90 ct) — obrazac <strong>T–T–L–T–T–T–L</strong>, prepoznatljiva durska lestvica.</p>
+    <p>Svi razlomci imaju oblik <span class="math">3<sup>a</sup>/2<sup>b</sup></span> — iz njih dolazi i lepota i problem skale.</p>
+  </div>
+</section>
+
+<!-- ═══════════════ KOMA ═══════════════ -->
+<section class="tint-lavender" id="koma">
+  <div class="deco-layer">
+    <span class="deco-symbol crimson" style="top: 8%; right: 4%; font-size: 14rem; font-style: normal; font-weight: 300;">23.46</span>
+    <span class="deco-symbol crimson deco-mono" style="top: 32%; right: 6%; font-size: 1.5rem; opacity: 0.10;">CT</span>
+    <span class="deco-symbol deco-float" style="top: 12%; left: 5%; font-size: 5rem;">(3⁄2)¹²</span>
+    <span class="deco-symbol gold deco-float-rev" style="bottom: 15%; left: 8%; font-size: 5rem;">2⁷</span>
+    <span class="deco-symbol crimson deco-mono" style="bottom: 8%; left: 40%; font-size: 0.85rem; opacity: 0.10;">531441 / 524288</span>
+    <svg class="deco-svg deco-spin" style="bottom: 30%; right: 30%; width: 180px; height: 180px;" viewBox="0 0 100 100">
+      <circle cx="50" cy="50" r="45" stroke-dasharray="280 30"/>
+    </svg>
+    <span class="deco-symbol crimson deco-pulse" style="top: 55%; left: 50%; font-size: 1.4rem;">✶</span>
+  </div>
+  <div class="container reveal">
+    <div class="section-head">
+      <div class="eyebrow">— V —</div>
+      <h2>Pitagorejska <span class="italic-accent">koma</span></h2>
+    </div>
+
+    <p>Očekivanje: 12 kvinti = 7 oktava → vraćamo se na isti ton. Proverimo.</p>
+
+    <div class="split" style="margin-top: 2rem;">
+      <div>
+        <p>Dvanaest čistih kvinti:</p>
+        <div class="display-eq">(3/2)<sup>12</sup> = <span class="frac"><span class="num">3<sup>12</sup></span><span class="den">2<sup>12</sup></span></span> = <span class="frac"><span class="num">531441</span><span class="den">4096</span></span> ≈ 129.746</div>
+        <p>Sedam oktava:</p>
+        <div class="display-eq err">2<sup>7</sup> = 128</div>
+        <p>Količnik = <strong>pitagorejska koma</strong>:</p>
+        <div class="display-eq"><span class="frac"><span class="num">(3/2)<sup>12</sup></span><span class="den">2<sup>7</sup></span></span> = <span class="frac"><span class="num">531441</span><span class="den">524288</span></span> ≈ 1.01364</div>
+        <p>U centima: <span class="math">1200 · log<sub>2</sub>(531441/524288) ≈ 23.46</span> centi (~ četvrtina polustepena).</p>
+      </div>
+      <div class="visual" style="margin: 0;">
+        <canvas id="circleFifths" width="500" height="500" style="max-width: 460px; margin: 0 auto; display: block;"></canvas>
+        <div class="caption">Krug kvinti. Crvena isprekidana strelica pokazuje da se krug ne zatvara savršeno.</div>
+      </div>
+    </div>
+
+    <p style="margin-top: 2rem;"><strong>Krug kvinti ne može da se zatvori.</strong> Polazeći iz C kroz 12 kvinti (C → G → D → A → E → B → F♯ → C♯ → G♯ → D♯ → A♯ → F → C), stižemo na ton koji je za pitagorejsku komu <em>viši</em> od polaznog C.</p>
+
+    <p>Ovo nije greška u računu — to je matematički zakon. Strog dokaz:</p>
+
+    <div class="theorem">
+      <span class="th-label">Teorema</span>
+      <p class="th-statement">Ne postoje pozitivni celi brojevi <span class="math">m</span> i <span class="math">n</span> takvi da važi <span class="math">(3/2)<sup>m</sup> = 2<sup>n</sup></span>.</p>
+      <div class="proof">
+        <span class="pf-label">Dokaz</span>
+        <ol>
+          <li>Pretpostavimo suprotno, da postoje pozitivni celi brojevi <span class="math">m</span> i <span class="math">n</span> za koje važi <span class="math">(3/2)<sup>m</sup> = 2<sup>n</sup></span>. Množimo obe strane sa <span class="math">2<sup>m</sup></span> i dobijamo: <span class="math">3<sup>m</sup> = 2<sup>m+n</sup></span>.</li>
+          <li>Razmotrimo levu i desnu stranu ove jednakosti.</li>
+          <li><strong>Leva strana:</strong> <span class="math">3<sup>m</sup></span>. Broj 3 je neparan, a proizvod neparnih celih brojeva uvek je neparan — to sledi iz činjenice da nijedan faktor ne sadrži prost broj 2 kao delilac. Prema <strong>Osnovnoj teoremi aritmetike</strong>, jedinstven rastav broja <span class="math">3<sup>m</sup></span> na proste činioce je <span class="math">3·3·...·3</span> (m puta), bez ijednog faktora 2. Dakle, <span class="math">3<sup>m</sup></span> je neparan za svako <span class="math">m ≥ 1</span>.</li>
+          <li><strong>Desna strana:</strong> <span class="math">2<sup>m+n</sup></span>. Pošto su <span class="math">m, n ≥ 1</span>, važi <span class="math">m + n ≥ 2</span>, pa je <span class="math">2<sup>m+n</sup></span> deljivo sa 2, dakle paran. Štaviše, rastav na proste činioce sadrži isključivo faktor 2, bez ijednog faktora 3.</li>
+          <li>Dobili smo da bi <span class="math">3<sup>m</sup></span> istovremeno bio <strong>neparan</strong> (leva strana) i <strong>paran</strong> (desna strana), što je <strong>kontradikcija</strong>. Alternativno, po Osnovnoj teoremi aritmetike, svaki pozitivan ceo broj ima jedinstven rastav na proste činioce, a broj ne može istovremeno imati rastav koji sadrži samo trojke i rastav koji sadrži samo dvojke. <span class="qed">∎</span></li>
+        </ol>
+      </div>
+      <p class="pf-concl"><strong>Posledica.</strong> <span class="math">log<sub>2</sub>(3/2)</span> je iracionalan broj.</p>
+      <div class="proof" style="margin-top: 0.5rem;">
+        <span class="pf-label">Dokaz posledice</span>
+        <ol>
+          <li>Kada bi <span class="math">log<sub>2</sub>(3/2)</span> bio racionalan i jednak <span class="math">n/m</span> za neke pozitivne cele brojeve <span class="math">m</span> i <span class="math">n</span>, tada bi iz definicije logaritma sledilo <span class="math">2<sup>n/m</sup> = 3/2</span>, odnosno <span class="math">(3/2)<sup>m</sup> = 2<sup>n</sup></span>, što je u kontradikciji sa upravo dokazanom teoremom. <span class="qed">∎</span></li>
+        </ol>
+      </div>
+    </div>
+
+    <p><strong>Posledica je duboka:</strong> kvinta i oktava su <em>nesamerljive</em>. Ovih 23.46 centi mučili su muzičare 2000 godina. Rešenje će biti <strong>jednako temperovano ugađanje</strong> — koje zahteva logaritme i iracionalne brojeve.</p>
+  </div>
+</section>
+
+<!-- ═══════════════ FIZIKA ═══════════════ -->
+<section class="tint-mint" id="fizika">
+  <div class="deco-layer">
+    <span class="deco-symbol teal deco-float" style="top: 8%; left: 5%; font-size: 12rem;">λ</span>
+    <span class="deco-symbol gold deco-float-rev" style="top: 12%; right: 7%; font-size: 11rem; font-style: normal;">f</span>
+    <span class="deco-symbol deco-float" style="bottom: 12%; left: 8%; font-size: 10rem; font-style: normal;">A</span>
+    <span class="deco-symbol deco-mono" style="top: 50%; right: 5%; font-size: 0.85rem; opacity: 0.07;">v = f · λ</span>
+    <span class="deco-symbol deco-mono" style="bottom: 40%; right: 12%; font-size: 1.2rem; opacity: 0.08;">440 Hz</span>
+    <svg class="deco-svg faint" style="bottom: 5%; right: 5%; width: 280px; height: 60px;" viewBox="0 0 280 60" preserveAspectRatio="none">
+      <path d="M 0 30 Q 35 5 70 30 T 140 30 T 210 30 T 280 30" stroke-width="2"/>
+    </svg>
+    <svg class="deco-svg faint" style="top: 60%; left: 3%; width: 200px; height: 50px;" viewBox="0 0 200 50" preserveAspectRatio="none">
+      <path d="M 0 25 Q 25 5 50 25 T 100 25 T 150 25 T 200 25" stroke-width="1.5"/>
+    </svg>
+  </div>
+  <div class="container reveal">
+    <div class="section-head">
+      <div class="eyebrow">— VI —</div>
+      <h2>Fizika <span class="italic-accent">zvuka</span></h2>
+    </div>
+
+    <p>Pitagorejci su otkrili <em>koje</em> odnose uho voli, ali ne i <em>zašto</em>. Odgovor leži u fizici talasa.</p>
+
+    <h3>Zvuk kao mehanički talas</h3>
+    <p>Zvuk je <strong>longitudinalni talas</strong> — naizmenične zone povišenog i sniženog pritiska u elastičnoj sredini. Brzina u vazduhu na 20°C: <strong>~343 m/s</strong>.</p>
+    <p>Prostiranje opisuje <strong>talasna jednačina</strong> (d'Alamberova):</p>
+    <div class="display-eq">∂²y/∂t² = v² · ∂²y/∂x²</div>
+    <p>gde je <span class="math">y(x, t)</span> pomeranje čestice na mestu <span class="math">x</span> u trenutku <span class="math">t</span>, a <span class="math">v</span> brzina prostiranja.</p>
+
+    <h3>Frekvencija, talasna dužina i amplituda</h3>
+    <div class="card-grid">
+      <div class="card mint">
+        <span class="symbol">f</span>
+        <h4>Frekvencija [Hz]</h4>
+        <p>Broj oscilacija u sekundi. <strong>Određuje visinu tona.</strong> Referentni A iznad srednjeg C = 440 Hz.</p>
+      </div>
+      <div class="card lavender">
+        <span class="symbol">λ</span>
+        <h4>Talasna dužina [m]</h4>
+        <p>Rastojanje između susednih tačaka u istoj fazi. Veza: <span class="math">v = f · λ</span>. Za ton A: <span class="math">λ = 343/440 ≈ 0.78 m</span>.</p>
+      </div>
+      <div class="card peach">
+        <span class="symbol">A</span>
+        <h4>Amplituda</h4>
+        <p>Maksimalno pomeranje čestice iz ravnoteže. <strong>Određuje glasnoću</strong> — ne menja visinu tona.</p>
+      </div>
+    </div>
+
+    <p style="margin-top: 1.5rem;">Najjednostavniji periodičan talas je <strong>sinusoida</strong>:</p>
+    <div class="display-eq">y(x, t) = A · sin(2πf·t − 2πx/λ)</div>
+    <p>Parametar <span class="math">A</span> ispred sinusa <em>jeste</em> amplituda — sinus ide između −1 i 1, pa je najveći mogući <span class="math">y</span> tačno <span class="math">A</span>.</p>
+
+    <div class="visual">
+      <canvas id="sineWave" width="800" height="160"></canvas>
+      <div class="caption">Sinusoidni talas — najjednostavniji periodični oblik, osnova svih složenijih zvukova.</div>
+    </div>
+
+    <p>Sinusoida = <strong>čist ton</strong>, bez boje (zvučni generator, ili približno flauta u visokom registru). Realni instrumenti nikad ne daju čistu sinusoidu — odatle pojam <em>tembra</em>.</p>
+  </div>
+</section>
+
+<!-- ═══════════════ STOJEĆI TALASI ═══════════════ -->
+<section id="obertoni">
+  <div class="deco-layer">
+    <span class="deco-symbol deco-mono deco-float" style="top: 8%; left: 5%; font-size: 1rem; opacity: 0.08;">n = 1</span>
+    <span class="deco-symbol deco-mono deco-float-rev" style="top: 13%; left: 5%; font-size: 1rem; opacity: 0.08;">n = 2</span>
+    <span class="deco-symbol deco-mono deco-float" style="top: 18%; left: 5%; font-size: 1rem; opacity: 0.08; animation-delay: 1s;">n = 3</span>
+    <span class="deco-symbol deco-mono deco-float-rev" style="top: 23%; left: 5%; font-size: 1rem; opacity: 0.08; animation-delay: 2s;">n = 4</span>
+    <span class="deco-symbol teal" style="top: 8%; right: 6%; font-size: 9rem; font-style: normal;">f</span>
+    <span class="deco-symbol gold deco-float" style="top: 30%; right: 4%; font-size: 6rem; font-style: normal;">2f</span>
+    <span class="deco-symbol lila deco-float-rev" style="top: 52%; right: 8%; font-size: 6rem; font-style: normal;">3f</span>
+    <span class="deco-symbol" style="bottom: 12%; right: 6%; font-size: 6rem; font-style: normal;">4f</span>
+    <svg class="deco-svg faint" style="bottom: 8%; left: 5%; width: 220px; height: 80px;" viewBox="0 0 220 80" preserveAspectRatio="none">
+      <path d="M 0 40 Q 55 5 110 40 T 220 40" stroke-width="2"/>
+      <circle cx="0" cy="40" r="3" fill="currentColor" stroke="none"/>
+      <circle cx="110" cy="40" r="3" fill="currentColor" stroke="none"/>
+      <circle cx="220" cy="40" r="3" fill="currentColor" stroke="none"/>
+    </svg>
+  </div>
+  <div class="container reveal">
+    <div class="section-head">
+      <div class="eyebrow">— VII —</div>
+      <h2>Stojeći talasi i <span class="italic-accent">obertonski niz</span></h2>
+    </div>
+
+    <h3>Stojeći talasi i rezonancija</h3>
+    <p>Žica fiksirana na oba kraja: talas se odbija s kraja na kraj. Nasuprotni talasi se superpozicijom kombinuju u <strong>stojeći talas</strong> — obrazac koji deluje kao da stoji u mestu.</p>
+    <p>Uslov za stojeći talas na žici dužine <span class="math">L</span>:</p>
+    <div class="display-eq">L = n · λ/2, &nbsp;&nbsp; n = 1, 2, 3, ...</div>
+    <p>odnosno <span class="math">L</span> mora biti ceo broj polutalasnih dužina. Odatle dozvoljene talasne dužine i frekvencije:</p>
+    <div class="display-eq">λ<sub>n</sub> = 2L/n</div>
+    <div class="display-eq">f<sub>n</sub> = n · v/(2L) = n · f<sub>1</sub></div>
+    <p>gde je <span class="math">f<sub>1</sub> = v/(2L)</span> <strong>osnovni ton</strong> (prvi harmonik). Više frekvencije su celobrojni višekratnici: <span class="math">2f<sub>1</sub>, 3f<sub>1</sub>, 4f<sub>1</sub></span>...</p>
+    <p><strong>Ključni rezultat:</strong> fizika žice <em>sama proizvodi celobrojne odnose</em> — iste one koje su Pitagorejci našli na monohordu.</p>
+
+    <div class="visual">
+      <canvas id="harmonicsCanvas" width="800" height="380"></canvas>
+      <div class="caption">Stojeći talasi na žici fiksirane dužine L. Crne tačke označavaju čvorove (mesta nulte amplitude).</div>
+    </div>
+
+    <p><strong>Čvorovi</strong> = tačke koje se ne pomeraju. <strong>Trbusi</strong> = tačke maksimalnog pomeranja. Za n-ti harmonik: <span class="math">n + 1</span> čvorova i <span class="math">n</span> trbuha.</p>
+
+    <p><strong>Rezonancija:</strong> kad pobudna frekvencija pogodi sopstvenu frekvenciju sistema, amplituda naglo raste. Žica ima beskonačno mnogo sopstvenih frekvencija. Kad trznemo žicu, pobuđuju se <em>svi</em> harmonici istovremeno — rezultujući zvuk je <strong>superpozicija svih harmonika</strong>.</p>
+
+    <h3>Obertonski niz</h3>
+    <p>Niz <span class="math">f<sub>1</sub>, 2f<sub>1</sub>, 3f<sub>1</sub>, 4f<sub>1</sub>, ...</span> = <strong>obertonski niz</strong> (harmonički niz). Prvi harmonik = osnovni ton, drugi = prvi oberton, itd.</p>
+
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Harmonik</th><th>Frekv.</th><th>Odnos sa preth.</th><th>Interval</th><th>Ton (za C₂)</th></tr></thead>
+        <tbody>
+          <tr><td>1.</td><td class="math">f₁</td><td>—</td><td>osnovni ton</td><td>C₂</td></tr>
+          <tr><td>2.</td><td class="math">2f₁</td><td class="math">2/1</td><td>oktava</td><td>C₃</td></tr>
+          <tr><td>3.</td><td class="math">3f₁</td><td class="math">3/2</td><td>čista kvinta</td><td>G₃</td></tr>
+          <tr><td>4.</td><td class="math">4f₁</td><td class="math">4/3</td><td>čista kvarta</td><td>C₄</td></tr>
+          <tr><td>5.</td><td class="math">5f₁</td><td class="math">5/4</td><td>velika terca</td><td>E₄</td></tr>
+          <tr><td>6.</td><td class="math">6f₁</td><td class="math">6/5</td><td>mala terca</td><td>G₄</td></tr>
+          <tr><td>7.</td><td class="math">7f₁</td><td class="math">7/6</td><td>(septimalna terca)</td><td>~B♭₄</td></tr>
+          <tr><td>8.</td><td class="math">8f₁</td><td class="math">8/7</td><td>(septimalna sekunda)</td><td>C₅</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="caption">Prvih osam harmonika i intervali između uzastopnih članova.</p>
+
+    <p style="margin-top: 1.5rem;"><strong>Otkriće:</strong> pitagorejski intervali (oktava, kvinta, kvarta) javljaju se kao odnosi <em>najnižih harmonika</em>. Čiste terce (<span class="math">5/4, 6/5</span>) javljaju se nešto više u nizu. Više harmonike → manji i složeniji intervali.</p>
+
+    <p><strong>Fizičko objašnjenje Pitagorinog otkrića:</strong> jednostavni razlomci zvuče prijatno jer već postoje u <em>svakom</em> tonu. Kad zazvuči C, sa njim zvuče i G (kvinta), E (terca), itd. Konsonancija = obertoni se <em>poklapaju</em>; disonancija = obertoni interferiraju neprijatno.</p>
+
+    <h3>Tembr</h3>
+    <p>Flauta, violina, truba sviraju isti A (440 Hz), ali zvuče različito. <strong>Tembr (boja zvuka)</strong> je određen rasporedom amplituda harmonika.</p>
+    <p><strong>Flauta:</strong> dominira osnovni ton, slabi viši harmonici → čist, prozračan zvuk. <strong>Violina:</strong> bogat spektar sa jakim višim harmonicima → toplina i punoća. <strong>Klarinet</strong> (cilindrična cev zatvorena na jednom kraju): pretežno neparni harmonici (<span class="math">3f<sub>1</sub>, 5f<sub>1</sub>, 7f<sub>1</sub></span>) → karakteristična šupljina u donjem registru.</p>
+    <p>Helmholc (1863, <em>Die Lehre von den Tonempfindungen</em>): <strong>dva zvuka iste visine zvuče različito isključivo zbog razlike u distribuciji energije među harmonicima.</strong></p>
+  </div>
+</section>
+
+<!-- ═══════════════ KONSONANCA ═══════════════ -->
+<section class="tint-mint" id="konsonanca">
+  <div class="deco-layer">
+    <span class="deco-symbol teal deco-float" style="top: 8%; left: 6%; font-size: 8rem; font-style: normal;">3:2</span>
+    <span class="deco-symbol gold deco-float-rev" style="top: 12%; right: 5%; font-size: 7rem; font-style: normal;">5:4</span>
+    <span class="deco-symbol lila deco-float" style="bottom: 25%; left: 5%; font-size: 6rem; font-style: normal;">6:5</span>
+    <span class="deco-symbol crimson deco-float-rev" style="bottom: 8%; right: 8%; font-size: 5rem; font-style: normal;">16:15</span>
+    <span class="deco-symbol deco-mono" style="top: 45%; left: 50%; font-size: 1rem; opacity: 0.07;">NZD(f₁, f₂)</span>
+    <svg class="deco-svg faint" style="top: 35%; right: 25%; width: 320px; height: 100px;" viewBox="0 0 320 100" preserveAspectRatio="none">
+      <path d="M 0 50 Q 20 20 40 50 T 80 50 T 120 50 T 160 50 T 200 50 T 240 50 T 280 50 T 320 50" stroke-width="1.5"/>
+      <path d="M 0 50 Q 27 15 53 50 T 107 50 T 160 50 T 213 50 T 267 50 T 320 50" stroke-width="1.5" opacity="0.6"/>
+    </svg>
+  </div>
+  <div class="container reveal">
+    <div class="section-head">
+      <div class="eyebrow">— VIII —</div>
+      <h2>Konsonanca i <span class="italic-accent">disonanca</span></h2>
+    </div>
+
+    <p>Dva istovremena tona: <strong>konsonancija</strong> (prijatno, stabilno) ili <strong>disonancija</strong> (napeto, grubo). Objašnjenje spaja matematiku, fiziku i psihoakustiku.</p>
+
+    <h3>Matematički kriterijum: periodičnost zbira talasa</h3>
+    <p>Neka su frekvencije u odnosu <span class="math">f<sub>1</sub>/f<sub>2</sub> = p/q</span> (nesvodljiv razlomak). Kombinovani talas ima period:</p>
+    <div class="display-eq">T = 1 / NZD(f<sub>1</sub>, f<sub>2</sub>)</div>
+    <p>Za to vreme viši ton napravi <span class="math">p</span> ciklusa, niži <span class="math">q</span>.</p>
+
+    <p><strong>Kvinta</strong> (200 Hz i 300 Hz, odnos <span class="math">3/2</span>): <span class="math">NZD = 100</span>, period <span class="math">T = 0.01 s</span>. Kratak, pravilan obrazac → uho čuje stabilno, prijatno.</p>
+    <p><strong>Mala sekunda</strong> (240 i 256 Hz, odnos <span class="math">16/15</span>): <span class="math">NZD = 16</span>, period <span class="math">T = 0.0625 s</span>. Duži i složeniji → napet, hrapav zvuk.</p>
+
+    <p style="margin-top: 1.5rem;">Uporedi grafički:</p>
+
+    <div class="visual">
+      <canvas id="superposBad" width="800" height="240"></canvas>
+      <div class="caption"><strong>Loš primer — disonanca (mala sekunda, 16:15).</strong> Bliske frekvencije stvaraju spore udare; crveni zbir je nepravilan i „hrapav".</div>
+    </div>
+    <div class="visual">
+      <canvas id="superpos" width="800" height="240"></canvas>
+      <div class="caption"><strong>Dobar primer — konsonanca (čista kvinta, 3:2).</strong> Zlatni zbir je pravilan, ponavljajući obrazac.</div>
+    </div>
+
+    <p><strong>Zaključak:</strong> što su <span class="math">p</span> i <span class="math">q</span> manji, talas se ponavlja brže i pravilnije → interval je konsonantniji.</p>
+
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Interval</th><th>Odnos frekv.</th><th>p + q</th><th>Percepcija</th></tr></thead>
+        <tbody>
+          <tr><td>Oktava</td><td class="math">2/1</td><td>3</td><td style="color: var(--teal-dark)">savršena konsonanca</td></tr>
+          <tr><td>Čista kvinta</td><td class="math">3/2</td><td>5</td><td style="color: var(--teal-dark)">savršena konsonanca</td></tr>
+          <tr><td>Čista kvarta</td><td class="math">4/3</td><td>7</td><td style="color: var(--teal-dark)">savršena konsonanca</td></tr>
+          <tr><td>Velika terca</td><td class="math">5/4</td><td>9</td><td>nesavršena konsonanca</td></tr>
+          <tr><td>Mala terca</td><td class="math">6/5</td><td>11</td><td>nesavršena konsonanca</td></tr>
+          <tr><td>Velika sekunda</td><td class="math">9/8</td><td>17</td><td style="color: var(--crimson)">disonanca</td></tr>
+          <tr><td>Mala sekunda</td><td class="math">16/15</td><td>31</td><td style="color: var(--crimson)">oštra disonanca</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="caption">Intervali rangirani po konsonantnosti. Zbir p + q raste sa porastom disonance.</p>
+
+    <h3>Fizički kriterijum: slaganje harmonika</h3>
+    <p>Helmholc (XIX vek): odgovor leži u <strong>udarima</strong>. Bliske frekvencije daju periodičnu promenu glasnoće:</p>
+    <div class="display-eq">f<sub>udara</sub> = |f<sub>1</sub> − f<sub>2</sub>|</div>
+    <p>Pri <span class="math">f<sub>udara</sub></span> od ~20-50 Hz, umesto pulsiranja čuje se <strong>hrapavost</strong> (roughness) — to <em>jeste</em> disonancija.</p>
+    <p>Tonovi instrumenata nisu čiste sinusoide — sadrže obertonske nizove. Zato hrapavost nastaje između <strong>svih bliskih parova harmonika</strong>.</p>
+    <p><strong>Kvinta (3/2):</strong> obertoni C (<span class="math">f, 2f, 3f, 4f, 5f, 6f...</span>) i G (<span class="math">3f/2, 3f, 9f/2, 6f...</span>) — treći harmonik C poklapa se sa drugim G, šesti sa četvrtim, itd. Veliko poklapanje → utisak srodnosti.</p>
+    <p><strong>Mala sekunda (16/15):</strong> gotovo svaki par harmonika je blizak ali se ne poklapa → svaki par stvara hrapavost.</p>
+
+    <h3>Granice matematičkog objašnjenja</h3>
+    <p>Konsonancija nadilazi čistu matematiku: <strong>(1)</strong> <em>kulturno uslovljena</em> (terca je u srednjem veku bila disonanca); <strong>(2)</strong> zavisi od <em>muzičkog konteksta</em>; <strong>(3)</strong> ima <em>neurofiziološku dimenziju</em> (očekivanja, memorija, emocije).</p>
+    <p>Matematika daje <strong>neophodan, ali ne i dovoljan uslov</strong>. Konsonancija živi na preseku fizike, fiziologije i kulture.</p>
+  </div>
+</section>
+
+<!-- ═══════════════ TEMPERAMENT ═══════════════ -->
+<section class="tint-lavender" id="temperament">
+  <div class="deco-layer">
+    <span class="deco-symbol teal" style="top: 8%; right: 6%; font-size: 11rem; font-style: normal;"><span class="sqrt"><span class="idx">12</span><span class="sgn">√</span><span class="rad">2</span></span></span>
+    <span class="deco-symbol gold deco-float" style="top: 15%; left: 5%; font-size: 8rem; font-style: normal;">q¹²</span>
+    <span class="deco-symbol deco-mono" style="top: 45%; left: 4%; font-size: 1rem; opacity: 0.08;">1.05946</span>
+    <span class="deco-symbol lila deco-float-rev" style="bottom: 12%; left: 8%; font-size: 9rem; font-style: normal;">1200</span>
+    <span class="deco-symbol crimson deco-mono" style="bottom: 22%; left: 30%; font-size: 1rem; opacity: 0.08;">ct</span>
+    <svg class="deco-svg faint" style="bottom: 5%; right: 5%; width: 320px; height: 60px;" viewBox="0 0 320 60">
+      <g stroke-width="1.2">
+        <line x1="10" y1="10" x2="10" y2="50"/>
+        <line x1="36" y1="10" x2="36" y2="50"/>
+        <line x1="62" y1="10" x2="62" y2="50"/>
+        <line x1="88" y1="10" x2="88" y2="50"/>
+        <line x1="114" y1="10" x2="114" y2="50"/>
+        <line x1="140" y1="10" x2="140" y2="50"/>
+        <line x1="166" y1="10" x2="166" y2="50"/>
+        <line x1="192" y1="10" x2="192" y2="50"/>
+        <line x1="218" y1="10" x2="218" y2="50"/>
+        <line x1="244" y1="10" x2="244" y2="50"/>
+        <line x1="270" y1="10" x2="270" y2="50"/>
+        <line x1="296" y1="10" x2="296" y2="50"/>
+        <line x1="322" y1="10" x2="322" y2="50"/>
+      </g>
+    </svg>
+  </div>
+  <div class="container reveal">
+    <div class="section-head">
+      <div class="eyebrow">— IX —</div>
+      <h2>Temperovano <span class="italic-accent">ugađanje</span></h2>
+    </div>
+
+    <p>Sistem zasnovan na čistim kvintama ne može da zatvori 12-tonski krug. Razni sistemi ugađanja kroz vekove pokušali su da raspodele grešku — konačno rešenje (XVIII vek): <strong>jednako temperovano ugađanje</strong>.</p>
+
+    <h3>Definicija temperovanog polustepena</h3>
+    <p>Ideja: podeliti oktavu na <strong>12 jednakih polustepena</strong>. Pošto je oktava = <span class="math">2/1</span>, množilac <span class="math">q</span> mora zadovoljiti:</p>
+    <div class="display-eq">q<sup>12</sup> = 2</div>
+    <p>odakle:</p>
+    <div class="display-eq">q = <span class="sqrt"><span class="idx">12</span><span class="sgn">√</span><span class="rad">2</span></span> = 2<sup>1/12</sup> ≈ 1.05946</div>
+    <p>Frekvencija tona <span class="math">n</span> polustepena iznad <span class="math">f<sub>0</sub></span>:</p>
+    <div class="display-eq">f<sub>n</sub> = f<sub>0</sub> · 2<sup>n/12</sup></div>
+
+    <p>Primer: A₄ = 440 Hz, E₅ je 7 polustepena više:</p>
+    <div class="display-eq">f<sub>E</sub> = 440 · 2<sup>7/12</sup> = 440 · 1.4983 ≈ 659.26 Hz</div>
+    <p>Čista kvinta bi dala <span class="math">440 · 3/2 = 660.00 Hz</span>. Razlika &lt; 1 Hz, gotovo nečujna. <strong>Snaga sistema:</strong> ne daje savršene intervale, ali dovoljno bliske aproksimacije <em>svih intervala u svim tonalitetima</em>.</p>
+  </div>
+
+  <!-- ════ FORMULA 2 ════ -->
+  <div class="container">
+    <div class="spotlight reveal">
+      <div class="tag">II · Iracionalni koren</div>
+      <div class="equation">q = <span class="sqrt"><span class="idx">12</span><span class="sgn">√</span><span class="rad alt">2</span></span> ≈ 1.05946</div>
+      <div class="name">Jednako temperovani polustepen</div>
+      <p class="meaning">Iracionalan broj koji deli oktavu na dvanaest jednakih koraka <em>u logaritamskoj skali</em>. Nijedan interval osim oktave nije savršen — ali nijedan nije ni dovoljno loš da smeta.</p>
+    </div>
+  </div>
+
+  <div class="container reveal">
+    <h3>Logaritamska priroda muzičke visine</h3>
+    <p>Zašto su <em>jednaki množioci</em> (a ne razlike) ono što uho čuje kao jednake korake?</p>
+    <p><strong>Veberov zakon</strong> (1834): nervni sistem reaguje na <em>procentualnu</em>, a ne apsolutnu razliku nadražaja. Za zvuk to znači: uho čuje <strong>odnos</strong> frekvencija.</p>
+    <p>Posledica — percepcija muzičke visine je <strong>logaritamska funkcija</strong> frekvencije:</p>
+    <div class="display-eq">h = log<sub>2</sub>(f / f<sub>0</sub>)</div>
+    <p>Oktava 100→200 Hz i 1000→2000 Hz percipiraju se kao isti razmak — u oba slučaja <span class="math">log<sub>2</sub>(f<sub>2</sub>/f<sub>1</sub>) = 1</span>.</p>
+
+    <h3>Merna jedinica cent</h3>
+    <p>Oktava = 1200 centi; temperovani polustepen = 100 centi. Interval sa odnosom <span class="math">r</span>:</p>
+    <div class="display-eq">n = 1200 · log<sub>2</sub>(r)</div>
+    <p><strong>Izvođenje:</strong> 1 cent = množilac <span class="math">2<sup>1/1200</sup></span>. Interval od <span class="math">n</span> centi ima množilac <span class="math">2<sup>n/1200</sup> = r</span>. Logaritmovanjem za osnovu 2: <span class="math">n/1200 = log<sub>2</sub>(r)</span>, dakle <span class="math">n = 1200 · log<sub>2</sub>(r)</span>.</p>
+    <p>1 cent = 0.058% frekvencije, znatno ispod praga čujnosti (~5 centi u srednjem registru).</p>
+
+    <h3>Poređenje sistema ugađanja</h3>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Interval</th><th>Pitag. (ct)</th><th>Temp. (ct)</th><th>Čisto (ct)</th><th>Δ temp–pit</th><th>Δ temp–čist</th></tr></thead>
+        <tbody>
+          <tr><td>Vel. sekunda</td><td>203.91</td><td>200.00</td><td>203.91</td><td>−3.91</td><td>−3.91</td></tr>
+          <tr><td>Vel. terca</td><td>407.82</td><td>400.00</td><td>386.31</td><td>−7.82</td><td style="color: var(--crimson)">+13.69</td></tr>
+          <tr><td>Č. kvarta</td><td>498.04</td><td>500.00</td><td>498.04</td><td style="color: var(--teal-dark)">+1.96</td><td style="color: var(--teal-dark)">+1.96</td></tr>
+          <tr><td>Č. kvinta</td><td>701.96</td><td>700.00</td><td>701.96</td><td style="color: var(--teal-dark)">−1.96</td><td style="color: var(--teal-dark)">−1.96</td></tr>
+          <tr><td>Vel. seksta</td><td>905.87</td><td>900.00</td><td>884.36</td><td>−5.87</td><td style="color: var(--crimson)">+15.64</td></tr>
+          <tr><td>Vel. septima</td><td>1109.78</td><td>1100.00</td><td>1088.27</td><td>−9.78</td><td style="color: var(--crimson)">+11.73</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="caption">Poređenje pitagorejskog, temperovanog i čistog ugađanja. Razlike su date u centima.</p>
+
+    <p style="margin-top: 1.5rem;"><strong>Dva zaključka. Prvo:</strong> temperovana kvinta i kvarta gotovo identične čistim (razlika 1.96 ct, ispod praga). <strong>Drugo:</strong> najveće odstupanje je kod terce — temperovana velika terca <em>viša</em> je za 13.69 ct od čiste. Ta razlika je čujna i daje temperovanim akordima blago napetu, lebdeću kvalitet.</p>
+    <p>Temperovano = <strong>kompromis</strong>: nijedan interval nije savršen, ali su svi dovoljno dobri, i — što je ključno — <em>jednako dobri u svim tonalitetima</em>.</p>
+  </div>
+</section>
+
+<!-- ═══════════════ DOKAZ IRACIONALNOSTI ¹²√2 ═══════════════ -->
+<section id="dokazi">
+  <div class="deco-layer">
+    <span class="deco-symbol teal deco-float" style="top: 8%; left: 5%; font-size: 13rem; font-style: normal;">√</span>
+    <span class="deco-symbol gold deco-float-rev" style="bottom: 10%; right: 6%; font-size: 8rem; font-style: normal;">p⁄q</span>
+    <span class="deco-symbol deco-mono" style="top: 42%; right: 7%; font-size: 1rem; opacity: 0.07;">NZD(p, q) = 1</span>
+    <span class="deco-symbol lila deco-pulse" style="top: 28%; left: 14%; font-size: 2rem;">∎</span>
+    <span class="deco-symbol crimson deco-pulse" style="bottom: 30%; left: 40%; font-size: 1.4rem; animation-delay: 1.5s;">✶</span>
+  </div>
+  <div class="container reveal">
+    <div class="section-head">
+      <div class="eyebrow">— X —</div>
+      <h2>Dokaz iracionalnosti <span class="italic-accent">¹²√2</span></h2>
+    </div>
+
+    <p class="narrow" style="margin: 0 auto 2rem;">Pitagorejski ideal — harmonija celih brojeva — morao je biti napušten. Temperovani polustepen <span class="math"><span class="sqrt"><span class="idx">12</span><span class="sgn">√</span><span class="rad">2</span></span></span> je iracionalan, pa <strong>nijedan temperovani interval osim oktave nije odnos celih brojeva</strong>.</p>
+
+    <div class="theorem">
+      <span class="th-label">Teorema</span>
+      <p class="th-statement">Broj <span class="math"><span class="sqrt"><span class="idx">12</span><span class="sgn">√</span><span class="rad">2</span></span></span> je iracionalan.</p>
+      <div class="proof">
+        <span class="pf-label">Dokaz</span>
+        <ol>
+          <li>Pretpostavimo suprotno, da je <span class="math"><span class="sqrt"><span class="idx">12</span><span class="sgn">√</span><span class="rad">2</span></span></span> racionalan, tj. da postoje pozitivni celi brojevi <span class="math">p</span> i <span class="math">q</span> (<strong>uzajamno prosti</strong>) takvi da važi <span class="math"><span class="sqrt"><span class="idx">12</span><span class="sgn">√</span><span class="rad">2</span></span> = p/q</span>.</li>
+          <li>Stepenujemo obe strane na dvanaesti stepen: <span class="math">2 = p<sup>12</sup> / q<sup>12</sup></span>, odnosno: <span class="math">p<sup>12</sup> = 2 · q<sup>12</sup></span>.</li>
+          <li>Iz ove jednakosti sledi da je <span class="math">p<sup>12</sup></span> <strong>paran</strong> broj, jer je deljiv sa 2. Pošto je <span class="math">p<sup>12</sup></span> paran, sam <span class="math">p</span> mora biti paran (neparan broj stepenovan na bilo koji stepen ostaje neparan). Dakle, <span class="math">p = 2k</span> za neki pozitivan ceo broj <span class="math">k</span>.</li>
+          <li>Uvrštavamo: <span class="math">(2k)<sup>12</sup> = 2 · q<sup>12</sup></span> ⇒ <span class="math">2<sup>12</sup> · k<sup>12</sup> = 2 · q<sup>12</sup></span> ⇒ <span class="math">2<sup>11</sup> · k<sup>12</sup> = q<sup>12</sup></span>.</li>
+          <li>Iz poslednje jednakosti sledi da je <span class="math">q<sup>12</sup></span> deljiv sa <span class="math">2<sup>11</sup></span>, pa je i sam <span class="math">q</span> paran.</li>
+          <li>Ali <span class="math">p</span> i <span class="math">q</span> su po pretpostavci <strong>uzajamno prosti</strong>, što znači da ne mogu oba biti parni. <strong>Kontradikcija.</strong> Dakle, <span class="math"><span class="sqrt"><span class="idx">12</span><span class="sgn">√</span><span class="rad">2</span></span></span> je iracionalan. <span class="qed">∎</span></li>
+        </ol>
+      </div>
+      <p class="pf-concl"><strong>Posledica.</strong> Ovaj rezultat ima dalekosežan značaj. Nijedan temperovani interval (osim oktave) ne može se izraziti kao razlomak celih brojeva. Čista kvinta <span class="math">3/2</span>, čista kvarta <span class="math">4/3</span>, čista terca <span class="math">5/4</span> <em>ne postoje</em> u temperovanom sistemu. Umesto njih postoje bliske aproksimacije čije su vrednosti iracionalne.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ FURIJE ═══════════════ -->
+<section class="tint-ink" id="furije">
+  <div class="deco-layer">
+    <span class="deco-symbol teal deco-float" style="top: 6%; left: 4%; font-size: 16rem;">Σ</span>
+    <span class="deco-symbol gold deco-float-rev" style="bottom: 8%; right: 5%; font-size: 14rem;">∫</span>
+    <span class="deco-symbol deco-mono" style="top: 45%; right: 8%; font-size: 1rem;">sin · cos</span>
+    <span class="deco-symbol deco-mono" style="top: 15%; right: 12%; font-size: 1rem;">f(t)</span>
+    <span class="deco-symbol" style="bottom: 30%; left: 8%; font-size: 5rem;">A<sub>n</sub></span>
+    <span class="deco-symbol gold" style="top: 55%; left: 35%; font-size: 4rem; font-style: normal;">φ</span>
+    <svg class="deco-svg faint" style="top: 25%; right: 4%; width: 280px; height: 80px;" viewBox="0 0 280 80" preserveAspectRatio="none">
+      <path d="M 0 40 Q 35 5 70 40 T 140 40 T 210 40 T 280 40" stroke-width="2"/>
+      <path d="M 0 40 Q 17 15 35 40 T 70 40 T 105 40 T 140 40 T 175 40 T 210 40 T 245 40 T 280 40" stroke-width="1.5" opacity="0.6"/>
+    </svg>
+    <span class="deco-symbol teal deco-pulse" style="top: 35%; left: 50%; font-size: 1.6rem;">✦</span>
+    <span class="deco-symbol gold deco-pulse" style="bottom: 25%; right: 30%; font-size: 1.4rem; animation-delay: 2s;">✧</span>
+  </div>
+  <div class="container reveal">
+    <div class="section-head">
+      <div class="eyebrow" style="color: var(--teal-bright);">— 6 —</div>
+      <h2>Furijeova <span class="italic-accent">analiza</span></h2>
+    </div>
+
+    <p class="lead narrow" style="text-align: center; margin: 0 auto;">Pitanje: postoji li formalan način da se složen talas razdvoji na sinusoidne komponente? Žan-Baptist Žozef Furije (1768–1830) dao je odgovor — jedan od najznačajnijih rezultata matematičke analize.</p>
+  </div>
+
+  <div class="container reveal">
+    <h3>6.1 Furijeova teorema</h3>
+    <p class="narrow" style="margin: 0 auto;">Svaka periodična funkcija <span class="math">f(t)</span> sa periodom <span class="math">T</span> može se zapisati kao zbir (potencijalno beskonačno mnogo) sinusoida čije su frekvencije celobrojni višekratnici osnovne <span class="math">f<sub>1</sub> = 1/T</span>:</p>
+
+    <div class="display-eq" style="color: var(--cream);">f(t) = a<sub>0</sub>/2 + Σ [a<sub>n</sub> cos(2πnt/T) + b<sub>n</sub> sin(2πnt/T)]</div>
+
+    <p class="narrow" style="margin: 0 auto;">gde sumacija ide po <span class="math">n = 1, 2, 3, …</span> Koeficijenti <span class="math">a<sub>n</sub></span> i <span class="math">b<sub>n</sub></span> jednoznačno su određeni samom funkcijom <span class="math">f(t)</span> i izračunavaju se pomoću integrala:</p>
+
+    <div class="display-eq" style="color: var(--cream);">a<sub>n</sub> = (2/T) ∫ f(t) cos(2πnt/T) dt</div>
+    <div class="display-eq" style="color: var(--cream);">b<sub>n</sub> = (2/T) ∫ f(t) sin(2πnt/T) dt</div>
+
+    <p class="narrow" style="margin: 0 auto;">gde se integracija vrši po jednom punom periodu. Član <span class="math">a<sub>0</sub>/2</span> predstavlja srednju vrednost funkcije (u akustici: jednosmernu komponentu signala, koja za zvuk tipično iznosi nula). Koeficijenti <span class="math">a<sub>n</sub></span> i <span class="math">b<sub>n</sub></span> određuju amplitudu i fazu n-tog harmonika.</p>
+
+    <p class="narrow" style="margin: 1.2rem auto 0;">Teorema važi pod takozvanim <strong>Dirihleovim uslovima</strong>: funkcija mora biti periodična, po delovima neprekidna i imati konačan broj ekstrema u jednom periodu. Svi fizički relevantni zvučni talasi zadovoljavaju ove uslove, pa se Furijeov red može primeniti na bilo koji muzički ton.</p>
+
+    <p class="narrow" style="margin: 1.2rem auto 0;">Ekvivalentan, i za muzičku primenu pregledniji, zapis koristi amplitudu i fazu umesto kosinusnih i sinusnih koeficijenata:</p>
+  </div>
+
+  <!-- ════ FORMULA III ════ -->
+  <div class="container">
+    <div class="spotlight reveal" style="background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.15);">
+      <div class="tag" style="color: var(--teal-bright); border-color: var(--teal-bright);">III · Furijeov red</div>
+      <div class="equation" style="color: var(--cream); font-size: clamp(1.5rem, 3.8vw, 2.6rem);">f(t) = A<sub>0</sub> + <span style="font-size:1.3em">Σ</span> A<sub>n</sub> sin(2π<span class="alt" style="color: var(--teal-bright);">nf<sub>1</sub></span>t + φ<sub>n</sub>)</div>
+      <div class="name" style="color: rgba(246,241,230,0.85);">Razlaganje signala na čiste tonove</div>
+      <p class="meaning" style="color: rgba(246,241,230,0.7);">U ovom zapisu, muzički ton je potpuno opisan nizom parova <em style="color: var(--teal-bright);">(A<sub>n</sub>, φ<sub>n</sub>)</em> za <span class="math">n = 1, 2, 3, …</span> Amplituda <span class="math">A<sub>n</sub></span> određuje koliko je jak n-ti harmonik, a faza <span class="math">φ<sub>n</sub></span> određuje gde u ciklusu taj harmonik počinje.</p>
+    </div>
+  </div>
+
+  <div class="container reveal">
+    <h3>6.2 Furijeova sinteza i analiza</h3>
+    <p class="narrow" style="margin: 0 auto;"><strong>Sinteza:</strong> od sinusoidnih komponenti gradimo složen talas. <strong>Analiza:</strong> obrnuto — iz složenog talasa izračunavamo koeficijente.</p>
+
+    <p class="narrow" style="margin: 1.2rem auto 0;">Slika ispod: tri harmonika (amplitude 1.0, 0.5, 0.33) sabiraju se u oblik koji više ne liči na sinusoidu.</p>
+
+    <div class="visual">
+      <canvas id="fourierSynth" width="800" height="320"></canvas>
+      <div class="caption">Slika 6: Furijeova sinteza. Tri sinusoidna talasa različitih frekvencija sabiraju se u složen oblik.</div>
+    </div>
+
+    <p class="narrow" style="margin: 1.2rem auto 0;">Beskonačno mnogo harmonika sa <span class="math">A<sub>n</sub> = 1/n</span> daje <em>testerast</em> talas; samo neparni harmonici sa <span class="math">A<sub>n</sub> = 1/n</span> daju <em>pravougaoni</em>. Oblik talasa i harmonički sadržaj nose istu informaciju u različitim predstavama.</p>
+  </div>
+
+  <div class="container reveal">
+    <h3>6.3 Spektar</h3>
+    <p class="narrow" style="margin: 0 auto;"><strong>Frekvencijski spektar</strong> = grafički prikaz amplituda harmonika. Horizontala = frekvencija (ili redni broj harmonika), vertikala = amplituda. Spektar sadrži svu informaciju o boji zvuka.</p>
+
+    <p class="narrow" style="margin: 1.2rem auto 0;"><strong>Flauta:</strong> dominira osnovni ton. <strong>Violina:</strong> ravnomeran spektar sa jakim 2., 3. i 4. harmonikom. <strong>Klarinet:</strong> dominiraju neparni harmonici (1., 3., 5., 7.), parni su slabi (cilindrična cev zatvorena na jednom kraju).</p>
+
+    <div class="visual">
+      <canvas id="spectraCanvas" width="800" height="240"></canvas>
+      <div class="caption">Slika 7: Uporedni spektri flaute, violine i klarineta. Klarinet ima karakteristično dominantne neparne harmonike.</div>
+    </div>
+
+    <p class="narrow" style="margin: 1.2rem auto 0;">Spektar formalno potvrđuje Helmholca: <em>dva tona iste frekvencije zvuče različito ako i samo ako se razlikuju po koeficijentima <span class="math">A<sub>n</sub></span> u Furijeovom razvoju.</em></p>
+  </div>
+
+  <div class="container reveal">
+    <h3>6.4 Primena u digitalnoj obradi zvuka</h3>
+    <p class="narrow" style="margin: 0 auto;"><strong>Brza Furijeova transformacija (FFT)</strong> omogućava računanje spektra u realnom vremenu. Primene:</p>
+
+    <p class="narrow" style="margin: 1.2rem auto 0;"><strong>Digitalni ekvilajzeri</strong> razdvajaju signal po opsezima, podešavaju harmonike, pa rekombinuju. <strong>Softverski sintesajzeri</strong> grade zvuk aditivnom sintezom — sabiranjem sinusoida sa kontrolisanim <span class="math">A<sub>n</sub></span> i <span class="math">φ<sub>n</sub></span>. <strong>Kompresija zvuka (MP3)</strong> identifikuje komponente koje uho ne čuje i uklanja ih.</p>
+
+    <p class="narrow" style="margin: 1.2rem auto 0;">Sve to direktno počiva na Furijeovoj teoremi: razložiti — obraditi komponentu po komponentu — sastaviti nazad.</p>
+  </div>
+</section>
+
+<!-- ═══════════════ C-DUR AKORD ═══════════════ -->
+<section id="akord">
+  <div class="deco-layer">
+    <span class="deco-symbol teal deco-float" style="top: 6%; left: 6%; font-size: 18rem; font-style: normal;">C</span>
+    <span class="deco-symbol gold deco-float-rev" style="top: 14%; right: 6%; font-size: 16rem; font-style: normal;">E</span>
+    <span class="deco-symbol crimson deco-float" style="bottom: 5%; left: 50%; font-size: 17rem; font-style: normal; animation-delay: 1s;">G</span>
+    <span class="deco-symbol deco-mono" style="top: 40%; left: 4%; font-size: 0.9rem; opacity: 0.08;">261.63 Hz</span>
+    <span class="deco-symbol deco-mono" style="top: 47%; left: 4%; font-size: 0.9rem; opacity: 0.08;">329.63 Hz</span>
+    <span class="deco-symbol deco-mono" style="top: 54%; left: 4%; font-size: 0.9rem; opacity: 0.08;">392.00 Hz</span>
+    <span class="deco-symbol lila deco-pulse" style="top: 35%; right: 35%; font-size: 1.6rem;">✦</span>
+    <span class="deco-symbol teal deco-pulse" style="bottom: 35%; right: 12%; font-size: 1.4rem; animation-delay: 2s;">✧</span>
+  </div>
+  <div class="container reveal">
+    <div class="section-head">
+      <div class="eyebrow">— 7 —</div>
+      <h2>Analiza <span class="italic-accent">C-dur akorda</span></h2>
+    </div>
+
+    <p class="lead narrow" style="text-align: center; margin: 0 auto;">C-dur akord (C, E, G) — primena svih koncepata na jedan konkretan slučaj.</p>
+  </div>
+
+  <div class="container reveal">
+    <h3>7.1 Frekvencije tonova C-dur akorda</h3>
+    <p class="narrow" style="margin: 0 auto;">Referentni ton: <span class="math">A<sub>4</sub> = 440 Hz</span>. Formula: <span class="math">f = 440 · 2<sup>n/12</sup></span>, gde je <span class="math">n</span> broj polustepena iznad (pozitivno) ili ispod (negativno) tona <span class="math">A<sub>4</sub></span>.</p>
+
+    <p class="narrow" style="margin: 1.2rem auto 0;">Ton <span class="math">C<sub>4</sub></span> se nalazi 9 polustepena ispod <span class="math">A<sub>4</sub></span> (A<sub>4</sub> → G♯<sub>4</sub> → G<sub>4</sub> → F♯<sub>4</sub> → F<sub>4</sub> → E<sub>4</sub> → D♯<sub>4</sub> → D<sub>4</sub> → C♯<sub>4</sub> → C<sub>4</sub>). Prema tome:</p>
+    <div class="display-eq">f<sub>C</sub> = 440 · 2<sup>−9/12</sup> = 440 · 0.5946 ≈ 261.63 Hz</div>
+
+    <p class="narrow" style="margin: 1.2rem auto 0;">Ton <span class="math">E<sub>4</sub></span> se nalazi 5 polustepena ispod <span class="math">A<sub>4</sub></span>:</p>
+    <div class="display-eq">f<sub>E</sub> = 440 · 2<sup>−5/12</sup> = 440 · 0.7492 ≈ 329.63 Hz</div>
+
+    <p class="narrow" style="margin: 1.2rem auto 0;">Ton <span class="math">G<sub>4</sub></span> se nalazi 2 polustepena ispod <span class="math">A<sub>4</sub></span>:</p>
+    <div class="display-eq">f<sub>G</sub> = 440 · 2<sup>−2/12</sup> = 440 · 0.8909 ≈ 392.00 Hz</div>
+
+    <div class="card-grid" style="margin-top: 2rem;">
+      <div class="card mint">
+        <span class="symbol">C</span>
+        <h4>261.63 Hz</h4>
+        <p><span class="math">440 · 2<sup>−9/12</sup></span></p>
+      </div>
+      <div class="card lavender">
+        <span class="symbol">E</span>
+        <h4>329.63 Hz</h4>
+        <p><span class="math">440 · 2<sup>−5/12</sup></span></p>
+      </div>
+      <div class="card peach">
+        <span class="symbol">G</span>
+        <h4>392.00 Hz</h4>
+        <p><span class="math">440 · 2<sup>−2/12</sup></span></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="container reveal">
+    <h3>7.2 Temperovani odnosi unutar akorda</h3>
+    <p class="narrow" style="margin: 0 auto;">Odnosi frekvencija između tonova C-dur akorda u temperovanom sistemu iznose:</p>
+
+    <div class="display-eq" style="font-size: clamp(0.95rem, 1.8vw, 1.2rem);">Velika terca (C<sub>4</sub> → E<sub>4</sub>): f<sub>E</sub>/f<sub>C</sub> = 329.63/261.63 = 2<sup>4/12</sup> ≈ 1.2599</div>
+    <div class="display-eq" style="font-size: clamp(0.95rem, 1.8vw, 1.2rem);">Čista kvinta (C<sub>4</sub> → G<sub>4</sub>): f<sub>G</sub>/f<sub>C</sub> = 392.00/261.63 = 2<sup>7/12</sup> ≈ 1.4983</div>
+    <div class="display-eq" style="font-size: clamp(0.95rem, 1.8vw, 1.2rem);">Mala terca (E<sub>4</sub> → G<sub>4</sub>): f<sub>G</sub>/f<sub>E</sub> = 392.00/329.63 = 2<sup>3/12</sup> ≈ 1.1892</div>
+
+    <p class="narrow" style="margin: 1.2rem auto 0;">Nijedan odnos nije razlomak celih brojeva — sva tri su iracionalni brojevi oblika <span class="math">2<sup>n/12</sup></span>. Neizbežna posledica temperovanog sistema.</p>
+  </div>
+
+  <div class="container reveal">
+    <h3>7.3 Poređenje sa čistim intervalima</h3>
+    <p class="narrow" style="margin: 0 auto;">U čistom ugađanju: velika terca <span class="math">5/4 = 1.2500</span>, čista kvinta <span class="math">3/2 = 1.5000</span>, mala terca <span class="math">6/5 = 1.2000</span>.</p>
+
+    <div class="tbl-wrap" style="margin-top: 1.5rem;">
+      <table>
+        <thead><tr><th>Interval</th><th>Temperovano</th><th>Čisto</th><th>Razlika (ct)</th><th>Čujnost</th></tr></thead>
+        <tbody>
+          <tr><td>Vel. terca (C→E)</td><td class="math">1.2599</td><td class="math">5/4 = 1.2500</td><td class="math">+13.69</td><td>čujna</td></tr>
+          <tr><td>Č. kvinta (C→G)</td><td class="math">1.4983</td><td class="math">3/2 = 1.5000</td><td class="math">−1.96</td><td>nečujna</td></tr>
+          <tr><td>M. terca (E→G)</td><td class="math">1.1892</td><td class="math">6/5 = 1.2000</td><td class="math">−15.64</td><td>čujna</td></tr>
+        </tbody>
+      </table>
+      <div class="caption">Tabela 6: Odstupanja temperovanih intervala C-dur akorda od čistih.</div>
+    </div>
+
+    <p class="narrow" style="margin: 1.2rem auto 0;"><strong>Prvo:</strong> temperovana kvinta gotovo identična čistoj — 1.96 ct ispod praga čujnosti (~5 ct). <strong>Drugo:</strong> obe terce pokazuju značajna odstupanja — velika za +13.69 ct (šira), mala za −15.64 ct (uža). Temperovani C-dur ima primetno širu veliku tercu i užu malu tercu nego što bi imao u čistom ugađanju.</p>
+  </div>
+
+  <div class="container reveal">
+    <h3>7.4 Obertonsko objašnjenje sklada C-dur akorda</h3>
+    <p class="narrow" style="margin: 0 auto;">Osnovne frekvencije: <span class="math">f<sub>C</sub> ≈ 261.63</span>, <span class="math">f<sub>E</sub> ≈ 329.63</span>, <span class="math">f<sub>G</sub> ≈ 392.00 Hz</span>. Obertoni = celobrojni višekratnici:</p>
+
+    <div class="display-eq" style="font-size: clamp(0.9rem, 1.6vw, 1.1rem);">Obertoni tona C: 261.63, 523.25, 784.88, 1046.50, 1308.13, 1569.75, …</div>
+    <div class="display-eq" style="font-size: clamp(0.9rem, 1.6vw, 1.1rem);">Obertoni tona E: 329.63, 659.26, 988.88, 1318.51, 1648.14, …</div>
+    <div class="display-eq" style="font-size: clamp(0.9rem, 1.6vw, 1.1rem);">Obertoni tona G: 392.00, 784.00, 1176.00, 1568.00, …</div>
+
+    <p class="narrow" style="margin: 1.2rem auto 0;"><strong>Bliska poklapanja:</strong> 3. harmonik C (784.88) ≈ 2. harmonik G (784.00) — razlika &lt; 1 Hz. 5. harmonik C (1308.13) ≈ 4. harmonik E (1318.51). 6. harmonik C (1569.75) ≈ 4. harmonik G (1568.00).</p>
+
+    <p class="narrow" style="margin: 1.2rem auto 0;">Ova poklapanja daju C-dur akordu sklad. Kvinta C–G ima izuzetno dobro poklapanje obertona, terca C–E manje ali i dalje značajno — odatle C-dur kao jedan od najkonsonantnijih akorda.</p>
+
+    <div class="visual">
+      <canvas id="chordViz" width="800" height="260"></canvas>
+      <div class="caption">Slaganje obertona tri tona. Treći harmonik tona C ≈ drugi harmonik tona G (≈785 Hz) — odatle utisak sklada.</div>
+      <div class="actions" style="margin-top: 2rem;">
+        <button class="pill" id="playChord">
+          <svg width="10" height="12" viewBox="0 0 10 12"><polygon points="0,0 0,12 10,6" fill="currentColor"/></svg>
+          Čuj C-dur akord
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="container reveal">
+    <h3>7.5 Furijeova reprezentacija C-dur akorda</h3>
+    <p class="narrow" style="margin: 0 auto;">C-dur akord = zbir tri obertonska niza:</p>
+
+    <div class="display-eq" style="font-size: clamp(0.95rem, 1.7vw, 1.15rem);">y(t) = Σ A<sub>Cn</sub> sin(2π · nf<sub>C</sub> · t) + Σ A<sub>En</sub> sin(2π · nf<sub>E</sub> · t) + Σ A<sub>Gn</sub> sin(2π · nf<sub>G</sub> · t)</div>
+
+    <p class="narrow" style="margin: 1.2rem auto 0;">Sumacija po <span class="math">n</span> od 1 do beskonačnosti (praktično, dok amplituda ne padne ispod praga). Koeficijenti <span class="math">A<sub>Cn</sub>, A<sub>En</sub>, A<sub>Gn</sub></span> zavise od instrumenta — na klaviru opadaju kao <span class="math">1/n</span>, na orguljama drugačije.</p>
+
+    <p class="narrow" style="margin: 1.2rem auto 0;">Spektar nije kontinualan — sastoji se od tri diskretna niza harmonika. Gde se poklapaju → konstruktivna interferencija, jača amplituda. Gde su bliski ali se ne poklapaju → udari → hrapavost na toj frekvenciji.</p>
+
+    <div class="quote" style="margin-top: 2rem;">Analiza C-dur akorda objedinjuje sve koncepte izložene u radu: pitagorejske razlomke, temperovane iracionalne odnose, fiziku stojećih talasa i obertonskog niza, Helmholcovu teoriju konsonance i Furijeovu dekompoziciju složenog signala.</div>
+  </div>
+</section>
+
+<!-- ═══════════════ ZAKLJUČAK ═══════════════ -->
+<section class="tint-mint" id="zakljucak">
+  <div class="deco-layer">
+    <span class="deco-symbol teal deco-float" style="top: 8%; left: 6%; font-size: 14rem; font-style: normal;">I</span>
+    <span class="deco-symbol gold deco-float-rev" style="top: 12%; right: 30%; font-size: 14rem; font-style: normal;">II</span>
+    <span class="deco-symbol lila deco-float" style="bottom: 8%; right: 6%; font-size: 14rem; font-style: normal; animation-delay: 1s;">III</span>
+    <span class="deco-symbol deco-mono" style="bottom: 25%; left: 8%; font-size: 0.9rem; opacity: 0.08;">3⁄2  ·  ¹²√2  ·  Σ</span>
+    <span class="deco-symbol teal deco-pulse" style="top: 50%; left: 50%; font-size: 1.4rem;">✦</span>
+  </div>
+  <div class="narrow reveal">
+    <div class="eyebrow">— 8 · Zaključak —</div>
+    <h2>Zaključak</h2>
+    <p style="margin-top: 2rem;">Rad je analizirao matematičku osnovu muzičke harmonije kroz tri aspekta: <strong>teoriju brojeva, fiziku zvuka i analizu signala</strong>.</p>
+
+    <p>Pitagorejski intervali (oktava <span class="math">2/1</span>, kvinta <span class="math">3/2</span>, kvarta <span class="math">4/3</span>) izlaze iz celobrojnih odnosa, a njihova konsonantnost počiva na poklapanju obertona. Krug kvinti se ne može zatvoriti — ne postoje celi <span class="math">m, n</span> takvi da <span class="math">(3/2)<sup>m</sup> = 2<sup>n</sup></span>. Pitagorejska koma (<span class="math">531441/524288 ≈ 23.46</span> ct) direktna je posledica.</p>
+
+    <p>Jednako temperovano ugađanje rešava problem podelom oktave sa množiocem <span class="sqrt"><span class="idx">12</span><span class="sgn">√</span><span class="rad">2</span></span> (dokazano iracionalan). Logaritamska funkcija formalizuje vezu množenja frekvencija i sabiranja u percepciji (Veberov zakon). Cent (<span class="math">1200 · log<sub>2</sub>(r)</span>) omogućava kvantitativno poređenje.</p>
+
+    <p>Poređenje sistema (pitagorejski, čist, temperovan) pokazalo je da je temperovani optimalan kompromis: kvinta odstupa svega 1.96 ct od čiste, dok je najveće odstupanje na terci (13.69 ct). Na C-dur akordu izračunate su tačne temperovane frekvencije: <span class="math">C<sub>4</sub> ≈ 261.63 Hz</span>, <span class="math">E<sub>4</sub> ≈ 329.63 Hz</span>, <span class="math">G<sub>4</sub> ≈ 392.00 Hz</span>.</p>
+
+    <p>Furijeova teorema dala je formalan okvir za tembr: boja zvuka = distribucija energije među harmonicima.</p>
+
+    <p><em>Svaki akord sadrži aritmetiku celih brojeva, fiziku stojećih talasa i strukturu beskonačnih trigonometrijskih redova.</em></p>
+  </div>
+</section>
+
+<!-- ═══════════════ LITERATURA ═══════════════ -->
+<section id="literatura">
+  <div class="deco-layer">
+    <span class="deco-symbol gold deco-float" style="top: 8%; left: 6%; font-size: 8rem;">§</span>
+    <span class="deco-symbol teal deco-float-rev" style="bottom: 10%; right: 8%; font-size: 7rem;">¶</span>
+    <span class="deco-symbol deco-mono" style="top: 45%; right: 6%; font-size: 0.9rem; opacity: 0.07;">1863 · 1822 · 1834</span>
+    <span class="deco-symbol lila deco-pulse" style="top: 60%; left: 15%; font-size: 1.4rem;">✦</span>
+  </div>
+  <div class="container reveal">
+    <div class="section-head">
+      <div class="eyebrow">— Literatura —</div>
+      <h2>Izvori i <span class="italic-accent">dalja literatura</span></h2>
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>№</th><th>Autor i delo</th><th>Izdavač</th><th>God.</th></tr></thead>
+        <tbody>
+          <tr><td>[1]</td><td>Helmholtz H., <em>On the Sensations of Tone as a Physiological Basis for the Theory of Music</em> (originalno: <em>Die Lehre von den Tonempfindungen</em>, 1863)</td><td>Dover Publications, New York</td><td>1954</td></tr>
+          <tr><td>[2]</td><td>Benson D., <em>Music: A Mathematical Offering</em></td><td>Cambridge University Press, Cambridge</td><td>2007</td></tr>
+          <tr><td>[3]</td><td>Loy G., <em>Musimathics: The Mathematical Foundations of Music</em></td><td>MIT Press, Cambridge MA</td><td>2006</td></tr>
+          <tr><td>[4]</td><td>Rossing T. D., Moore F. R., Wheeler P. A., <em>The Science of Sound</em> (3. izdanje)</td><td>Addison Wesley, San Francisco</td><td>2002</td></tr>
+          <tr><td>[5]</td><td>Čauković N., <em>Fizika za prvi razred gimnazije</em></td><td>Zavod za udžbenike, Beograd</td><td>2019</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="logo-badge footer-logo"><img src="gimnazijaLogo.png" alt="Grb Prve kragujevačke gimnazije" onerror="this.closest('.logo-badge').style.display='none'" /></div>
+  <div class="signature">Prva kragujevačka gimnazija</div>
+  <div class="school">Maj mesec matematike · 2026</div>
+  <div class="mentor">Mentor: Marija Rafajlović Stojković</div>
+</footer>
+
+<script>
+// ═════ Theme constants used by canvas drawings ═════
+const C = {
+  ink: '#0E2E2E',
+  ink2: '#2C4646',
+  ink3: '#5D7373',
+  faint: '#8C9C9C',
+  teal: '#1E8B89',
+  tealBright: '#2DA8A6',
+  tealDark: '#146362',
+  crimson: '#C25A4A',
+  gold: '#C19A4E',
+  mint: '#DCEFE9',
+  paper: '#FFFBF2',
+  cream: '#F6F1E6',
+  whiteOnInk: 'rgba(246,241,230,0.9)'
+};
+
+// ═════ Hero animated waves ═════
+(function() {
+  const c = document.getElementById('heroCanvas');
+  if (!c) return;
+  const ctx = c.getContext('2d');
+  function resize() {
+    c.width = c.offsetWidth * devicePixelRatio;
+    c.height = c.offsetHeight * devicePixelRatio;
+    ctx.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
+  }
+  resize();
+  window.addEventListener('resize', resize);
+  let t = 0;
+  function draw() {
+    const w = c.offsetWidth, h = c.offsetHeight;
+    ctx.clearRect(0, 0, w, h);
+    const waves = [
+      { freq: 0.8, amp: 48, color: 'rgba(14,46,46,0.35)', speed: 0.006, phase: 0, width: 1.8 },
+      { freq: 1.3, amp: 34, color: 'rgba(20,99,98,0.42)', speed: 0.009, phase: 1.5, width: 1.6 },
+      { freq: 2.0, amp: 24, color: 'rgba(193,154,78,0.45)', speed: 0.013, phase: 3.1, width: 1.4 },
+      { freq: 3.1, amp: 16, color: 'rgba(14,46,46,0.25)', speed: 0.018, phase: 2.0, width: 1.2 },
+      { freq: 4.5, amp: 10, color: 'rgba(20,99,98,0.20)', speed: 0.024, phase: 0.7, width: 1.0 }
+    ];
+    waves.forEach(wave => {
+      ctx.beginPath();
+      ctx.strokeStyle = wave.color;
+      ctx.lineWidth = wave.width;
+      for (let x = 0; x <= w; x += 2) {
+        const y = h * 0.55 + Math.sin((x / w) * Math.PI * 2 * wave.freq + t * wave.speed + wave.phase) * wave.amp;
+        if (x === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      }
+      ctx.stroke();
+    });
+    t++;
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+
+// ═════ Monochord ═════
+let monoTime = 0;
+const monoConfigs = {
+  oktava: { bridgeX: 400, label: '1/2 dužine žice → oktava (2:1)', freq: 2 },
+  kvinta: { bridgeX: 488, label: '2/3 dužine žice → čista kvinta (3:2)', freq: 1.5 },
+  kvarta: { bridgeX: 558, label: '3/4 dužine žice → čista kvarta (4:3)', freq: 1.333 }
+};
+let currentMono = monoConfigs.oktava;
+let monoActive = 0;
+function setMonochord(name) {
+  currentMono = monoConfigs[name];
+  monoActive = 1;
+  const bridge = document.getElementById('bridge');
+  if (bridge) bridge.setAttribute('transform', `translate(${currentMono.bridgeX},0)`);
+  const lbl = document.getElementById('ratioLabel');
+  if (lbl) lbl.textContent = currentMono.label;
+  // play
+  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  const base = 261.63;
+  const ratios = { oktava: [1, 2], kvinta: [1, 1.5], kvarta: [1, 4/3] };
+  const fs = ratios[name];
+  fs.forEach((r, i) => {
+    const osc = audioCtx.createOscillator();
+    osc.type = 'sine';
+    osc.frequency.value = base * r;
+    const gain = audioCtx.createGain();
+    gain.gain.setValueAtTime(0, audioCtx.currentTime);
+    gain.gain.linearRampToValueAtTime(0.12, audioCtx.currentTime + 0.04 + i * 0.04);
+    gain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 1.1);
+    osc.connect(gain).connect(audioCtx.destination);
+    osc.start(audioCtx.currentTime);
+    osc.stop(audioCtx.currentTime + 1.2);
+  });
+}
+function animateMono() {
+  monoTime += 0.04;
+  monoActive *= 0.992;
+  const sL = document.getElementById('stringL');
+  const sR = document.getElementById('stringR');
+  if (sL && sR) {
+    const bx = currentMono.bridgeX;
+    const midL = (85 + bx) / 2;
+    const midR = (bx + 715) / 2;
+    const amp1 = Math.sin(monoTime * currentMono.freq * 3) * 8 * (0.3 + 0.7 * monoActive);
+    const amp2 = Math.sin(monoTime * 1.5) * 3 * (0.2 + 0.5 * monoActive);
+    sL.setAttribute('d', `M 85 125 Q ${midL} ${125 + amp1} ${bx} 125`);
+    sR.setAttribute('d', `M ${bx} 125 Q ${midR} ${125 + amp2} 715 125`);
+  }
+  requestAnimationFrame(animateMono);
+}
+animateMono();
+
+// ═════ Circle of fifths ═════
+(function() {
+  const c = document.getElementById('circleFifths');
+  if (!c) return;
+  const ctx = c.getContext('2d');
+  const W = c.width, H = c.height;
+  const cx = W/2, cy = H/2, R = W * 0.38;
+  const notes = ['C','G','D','A','E','B','F♯','C♯','G♯','D♯','A♯','F'];
+  let phase = 0;
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    ctx.strokeStyle = 'rgba(14,46,46,0.12)';
+    ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.arc(cx, cy, R, 0, Math.PI * 2); ctx.stroke();
+    notes.forEach((note, i) => {
+      const a = (i / 12) * Math.PI * 2 - Math.PI / 2;
+      const x = cx + Math.cos(a) * R;
+      const y = cy + Math.sin(a) * R;
+      ctx.fillStyle = i === 0 ? C.teal : 'rgba(14,46,46,0.4)';
+      ctx.beginPath(); ctx.arc(x, y, i === 0 ? 8 : 5, 0, Math.PI * 2); ctx.fill();
+      const lx = cx + Math.cos(a) * (R + 28);
+      const ly = cy + Math.sin(a) * (R + 28);
+      ctx.fillStyle = i === 0 ? C.teal : C.ink;
+      ctx.font = (i === 0 ? 'italic 20px' : '16px') + ' Fraunces';
+      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.fillText(note, lx, ly);
+    });
+    for (let i = 0; i < 12; i++) {
+      const a1 = (i / 12) * Math.PI * 2 - Math.PI / 2;
+      const a2 = ((i + 1) / 12) * Math.PI * 2 - Math.PI / 2;
+      const x1 = cx + Math.cos(a1) * R, y1 = cy + Math.sin(a1) * R;
+      const x2 = cx + Math.cos(a2) * R, y2 = cy + Math.sin(a2) * R;
+      const progress = ((phase - i * 0.5) % 12 + 12) % 12;
+      const opacity = Math.max(0, 1 - Math.abs(progress - 1) * 0.5);
+      ctx.strokeStyle = `rgba(30,139,137,${0.15 + opacity * 0.5})`;
+      ctx.lineWidth = 1.5;
+      const midA = (a1 + a2) / 2;
+      const cR = R * 0.82;
+      ctx.beginPath();
+      ctx.moveTo(x1, y1);
+      ctx.quadraticCurveTo(cx + Math.cos(midA) * cR, cy + Math.sin(midA) * cR, x2, y2);
+      ctx.stroke();
+    }
+    // comma gap
+    const aS = -Math.PI / 2, aE = aS + 0.18;
+    ctx.strokeStyle = C.crimson;
+    ctx.lineWidth = 2.5;
+    ctx.setLineDash([5, 4]);
+    ctx.beginPath(); ctx.arc(cx, cy, R + 14, aS, aE); ctx.stroke();
+    ctx.setLineDash([]);
+    const tx = cx + Math.cos(aE) * (R + 14);
+    const ty = cy + Math.sin(aE) * (R + 14);
+    ctx.fillStyle = C.crimson;
+    ctx.beginPath(); ctx.arc(tx, ty, 4, 0, Math.PI * 2); ctx.fill();
+    // center
+    ctx.fillStyle = C.ink2;
+    ctx.font = 'italic 15px Fraunces';
+    ctx.textAlign = 'center';
+    ctx.fillText('12 kvinti ≠ 7 oktava', cx, cy - 8);
+    ctx.fillStyle = C.crimson;
+    ctx.font = '12px JetBrains Mono';
+    ctx.fillText('≈ 23.46 ct', cx, cy + 18);
+    phase += 0.02;
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+// ═════ Pure sine ═════
+(function() {
+  const c = document.getElementById('sineWave');
+  if (!c) return;
+  const ctx = c.getContext('2d');
+  let t = 0;
+  function draw() {
+    ctx.clearRect(0, 0, c.width, c.height);
+    ctx.strokeStyle = 'rgba(14,46,46,0.08)';
+    ctx.beginPath(); ctx.moveTo(0, c.height / 2); ctx.lineTo(c.width, c.height / 2); ctx.stroke();
+    ctx.strokeStyle = C.teal;
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    for (let x = 0; x <= c.width; x++) {
+      const y = c.height / 2 + Math.sin((x / c.width) * Math.PI * 4 + t * 0.035) * 45;
+      if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+    t++;
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+// ═════ Standing waves ═════
+(function() {
+  const c = document.getElementById('harmonicsCanvas');
+  if (!c) return;
+  const ctx = c.getContext('2d');
+  const W = c.width, H = c.height;
+  const colors = [C.teal, '#6B5BAE', C.gold, C.crimson];
+  let t = 0;
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    const rowH = H / 4;
+    for (let n = 1; n <= 4; n++) {
+      const rowY = (n - 0.5) * rowH;
+      ctx.strokeStyle = 'rgba(14,46,46,0.06)';
+      ctx.beginPath(); ctx.moveTo(60, rowY); ctx.lineTo(W - 60, rowY); ctx.stroke();
+      const xS = 60, xE = W - 60, L = xE - xS;
+      const env = Math.sin(t * 0.06 * (1 + (n - 1) * 0.3));
+      ctx.strokeStyle = colors[n - 1];
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      for (let x = xS; x <= xE; x++) {
+        const u = (x - xS) / L;
+        const y = rowY + Math.sin(u * Math.PI * n) * (rowH * 0.35) * env;
+        if (x === xS) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+      }
+      ctx.stroke();
+      ctx.fillStyle = C.ink;
+      for (let k = 0; k <= n; k++) {
+        const x = xS + (L * k) / n;
+        ctx.beginPath(); ctx.arc(x, rowY, 4, 0, Math.PI * 2); ctx.fill();
+      }
+      ctx.fillStyle = colors[n - 1];
+      ctx.font = 'italic 16px Fraunces';
+      ctx.textAlign = 'left';
+      ctx.fillText(`n=${n} · f${getSub(n)} = ${n}f`, 10, rowY + 5);
+    }
+    t++;
+    requestAnimationFrame(draw);
+  }
+  function getSub(n) { return ['₀','₁','₂','₃','₄'][n] || ''; }
+  draw();
+})();
+
+// ═════ Superposition ═════
+(function() {
+  const c = document.getElementById('superpos');
+  if (!c) return;
+  const ctx = c.getContext('2d');
+  const W = c.width, H = c.height;
+  let t = 0;
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    ctx.strokeStyle = 'rgba(14,46,46,0.06)';
+    ctx.beginPath(); ctx.moveTo(0, H/2); ctx.lineTo(W, H/2); ctx.stroke();
+    function curve(freq, amp, color, yOff) {
+      ctx.strokeStyle = color; ctx.lineWidth = 1.4;
+      ctx.beginPath();
+      for (let x = 0; x <= W; x++) {
+        const y = H/2 + yOff + Math.sin((x / W) * Math.PI * 2 * freq + t * 0.03) * amp;
+        if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+      }
+      ctx.stroke();
+    }
+    curve(2, 20, 'rgba(30,139,137,0.5)', -70);
+    curve(3, 20, 'rgba(194,90,74,0.5)', -70);
+    ctx.strokeStyle = C.gold; ctx.lineWidth = 2.5;
+    ctx.beginPath();
+    for (let x = 0; x <= W; x++) {
+      const a = Math.sin((x / W) * Math.PI * 2 * 2 + t * 0.03) * 28;
+      const b = Math.sin((x / W) * Math.PI * 2 * 3 + t * 0.03) * 28;
+      const y = H/2 + 50 + (a + b);
+      if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+    ctx.font = 'italic 14px Fraunces';
+    ctx.fillStyle = C.teal; ctx.fillText('f₁ · 2 ciklusa', 12, H/2 - 100);
+    ctx.fillStyle = C.crimson; ctx.fillText('f₂ · 3 ciklusa', 130, H/2 - 100);
+    ctx.fillStyle = C.gold; ctx.fillText('zbir — periodični obrazac', 12, H/2 + 110);
+    t++;
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+// ═════ Fourier synthesis ═════
+(function() {
+  const c = document.getElementById('fourierSynth');
+  if (!c) return;
+  const ctx = c.getContext('2d');
+  const W = c.width, H = c.height;
+  const rows = [
+    { n: 1, amp: 25, color: C.tealBright, label: 'f₁  (amp 1.0)' },
+    { n: 2, amp: 12, color: '#A89BD6', label: '2f  (amp 0.5)' },
+    { n: 3, amp: 8, color: '#E89B6A', label: '3f  (amp 0.33)' }
+  ];
+  let t = 0;
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    const rh = H / 4;
+    rows.forEach((r, i) => {
+      const y0 = (i + 0.5) * rh;
+      ctx.strokeStyle = 'rgba(255,255,255,0.06)';
+      ctx.beginPath(); ctx.moveTo(0, y0); ctx.lineTo(W, y0); ctx.stroke();
+      ctx.strokeStyle = r.color; ctx.lineWidth = 1.6;
+      ctx.beginPath();
+      for (let x = 0; x <= W; x++) {
+        const y = y0 + Math.sin((x / W) * Math.PI * 4 * r.n + t * 0.03) * r.amp;
+        if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+      }
+      ctx.stroke();
+      ctx.fillStyle = r.color;
+      ctx.font = 'italic 14px Fraunces';
+      ctx.fillText(r.label, 12, y0 - r.amp - 8);
+    });
+    const y0 = 3.5 * rh;
+    ctx.strokeStyle = '#F0DEAA'; ctx.lineWidth = 2.5;
+    ctx.beginPath();
+    for (let x = 0; x <= W; x++) {
+      const v = Math.sin((x / W) * Math.PI * 4 + t * 0.03) * 25
+              + Math.sin((x / W) * Math.PI * 4 * 2 + t * 0.03) * 12
+              + Math.sin((x / W) * Math.PI * 4 * 3 + t * 0.03) * 8;
+      const y = y0 + v;
+      if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+    ctx.fillStyle = '#F0DEAA';
+    ctx.font = 'italic 14px Fraunces';
+    ctx.fillText('Σ — sintetisani složeni talas', 12, y0 - 40);
+    t++;
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+// ═════ Spectra ═════
+(function() {
+  const c = document.getElementById('spectraCanvas');
+  if (!c) return;
+  const ctx = c.getContext('2d');
+  const W = c.width, H = c.height;
+  const profiles = {
+    'Flauta': [1.0, 0.15, 0.08, 0.04, 0.03, 0.02, 0.01, 0.01],
+    'Violina': [1.0, 0.7, 0.55, 0.35, 0.25, 0.15, 0.1, 0.06],
+    'Klarinet': [1.0, 0.05, 0.85, 0.08, 0.65, 0.06, 0.45, 0.04]
+  };
+  const colors = { 'Flauta': C.tealBright, 'Violina': '#E0C77A', 'Klarinet': '#D8856E' };
+  let anim = 0;
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    const colW = W / 3;
+    const harm = 8;
+    Object.keys(profiles).forEach((name, idx) => {
+      const cx0 = idx * colW + 20;
+      const cw = colW - 40;
+      ctx.strokeStyle = 'rgba(255,255,255,0.12)';
+      ctx.beginPath(); ctx.moveTo(cx0, H - 40); ctx.lineTo(cx0 + cw, H - 40); ctx.stroke();
+      ctx.fillStyle = colors[name];
+      ctx.font = 'italic 18px Fraunces';
+      ctx.textAlign = 'center';
+      ctx.fillText(name, cx0 + cw/2, 24);
+      const barW = cw / (harm * 1.4);
+      profiles[name].forEach((amp, i) => {
+        const x = cx0 + (i + 0.5) * (cw / harm);
+        const a = amp * Math.min(1, anim / 60);
+        const h = a * (H - 80);
+        ctx.fillStyle = colors[name];
+        ctx.fillRect(x - barW/2, H - 40 - h, barW, h);
+        ctx.fillStyle = 'rgba(246,241,230,0.5)';
+        ctx.font = '10px JetBrains Mono';
+        ctx.fillText(i + 1, x, H - 25);
+      });
+    });
+    if (anim < 60) anim++;
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+// ═════ Chord harmonics overlap ═════
+(function() {
+  const c = document.getElementById('chordViz');
+  if (!c) return;
+  const ctx = c.getContext('2d');
+  const W = c.width, H = c.height;
+  const tones = [
+    { f: 261.63, color: C.teal, name: 'C', y: H * 0.3 },
+    { f: 329.63, color: C.gold, name: 'E', y: H * 0.55 },
+    { f: 392.00, color: C.crimson, name: 'G', y: H * 0.8 }
+  ];
+  const maxF = 2400;
+  const freqToX = f => 60 + (f / maxF) * (W - 80);
+  let anim = 0;
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    ctx.strokeStyle = 'rgba(14,46,46,0.15)';
+    ctx.beginPath(); ctx.moveTo(50, H - 30); ctx.lineTo(W - 10, H - 30); ctx.stroke();
+    ctx.fillStyle = C.ink3;
+    ctx.font = '11px JetBrains Mono';
+    ctx.textAlign = 'center';
+    [0, 500, 1000, 1500, 2000].forEach(f => {
+      const x = freqToX(f);
+      ctx.fillText(f + ' Hz', x, H - 12);
+      ctx.strokeStyle = 'rgba(14,46,46,0.05)';
+      ctx.beginPath(); ctx.moveTo(x, 30); ctx.lineTo(x, H - 30); ctx.stroke();
+    });
+    tones.forEach((tone, ti) => {
+      ctx.fillStyle = tone.color;
+      ctx.font = 'italic 17px Fraunces';
+      ctx.textAlign = 'right';
+      ctx.fillText(tone.name, 40, tone.y + 5);
+      for (let n = 1; n <= 6; n++) {
+        const x = freqToX(tone.f * n);
+        if (x > W - 10) break;
+        const life = Math.min(1, (anim - ti * 15 - n * 5) / 30);
+        if (life <= 0) continue;
+        const h = (55 / n) * life;
+        ctx.strokeStyle = tone.color; ctx.lineWidth = 2;
+        ctx.beginPath(); ctx.moveTo(x, tone.y); ctx.lineTo(x, tone.y - h); ctx.stroke();
+        ctx.fillStyle = tone.color;
+        ctx.beginPath(); ctx.arc(x, tone.y - h, 3, 0, Math.PI * 2); ctx.fill();
+      }
+    });
+    if (anim > 80) {
+      const x = freqToX(785);
+      ctx.strokeStyle = 'rgba(30,139,137,0.6)';
+      ctx.lineWidth = 1.5;
+      ctx.setLineDash([4, 4]);
+      ctx.beginPath(); ctx.arc(x, H/2, 24 + Math.sin(anim * 0.05) * 3, 0, Math.PI * 2); ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.fillStyle = C.teal;
+      ctx.font = 'italic 13px Fraunces';
+      ctx.textAlign = 'center';
+      ctx.fillText('3f_C ≈ 2f_G', x, 28);
+    }
+    anim++;
+    if (anim > 1000) anim = 80;
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+// ═════ Web Audio: C major chord ═════
+let audioCtx = null;
+let playing = false;
+let activeNodes = [];
+document.getElementById('playChord')?.addEventListener('click', function() {
+  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  if (playing) {
+    activeNodes.forEach(({ osc, gain }) => {
+      gain.gain.cancelScheduledValues(audioCtx.currentTime);
+      gain.gain.setValueAtTime(gain.gain.value, audioCtx.currentTime);
+      gain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 0.35);
+      osc.stop(audioCtx.currentTime + 0.4);
+    });
+    activeNodes = []; playing = false;
+    this.innerHTML = `<svg width="10" height="12" viewBox="0 0 10 12"><polygon points="0,0 0,12 10,6" fill="currentColor"/></svg> Čuj C-dur akord`;
+    return;
+  }
+  const freqs = [261.63, 329.63, 392.00];
+  freqs.forEach((f, i) => {
+    [1, 2, 3].forEach((n) => {
+      const osc = audioCtx.createOscillator();
+      osc.type = 'sine';
+      osc.frequency.value = f * n;
+      const gain = audioCtx.createGain();
+      const baseAmp = 0.14 / (n * n);
+      gain.gain.setValueAtTime(0, audioCtx.currentTime);
+      gain.gain.linearRampToValueAtTime(baseAmp, audioCtx.currentTime + 0.05 + i * 0.07);
+      osc.connect(gain).connect(audioCtx.destination);
+      osc.start(audioCtx.currentTime);
+      activeNodes.push({ osc, gain });
+    });
+  });
+  playing = true;
+  this.innerHTML = `<svg width="10" height="12" viewBox="0 0 10 12"><rect x="1" y="1" width="2.5" height="10" fill="currentColor"/><rect x="6.5" y="1" width="2.5" height="10" fill="currentColor"/></svg> Zaustavi`;
+});
+window.setMonochord = setMonochord;
+
+// ═════ Reveal on scroll ═════
+const reveals = document.querySelectorAll('.reveal');
+const obs = new IntersectionObserver(es => {
+  es.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+}, { threshold: 0.12 });
+reveals.forEach(r => obs.observe(r));
+
+// ═════ Burger menu toggle ═════
+(function() {
+  const btn = document.getElementById('menuBtn');
+  const panel = document.getElementById('menuPanel');
+  const backdrop = document.getElementById('menuBackdrop');
+  if (!btn || !panel || !backdrop) return;
+  const links = panel.querySelectorAll('a');
+  let open = false;
+  function set(state) {
+    open = state;
+    btn.classList.toggle('open', open);
+    panel.classList.toggle('open', open);
+    backdrop.classList.toggle('open', open);
+    document.body.classList.toggle('menu-open', open);
+    btn.setAttribute('aria-expanded', String(open));
+    panel.setAttribute('aria-hidden', String(!open));
+    backdrop.setAttribute('aria-hidden', String(!open));
+    btn.setAttribute('aria-label', open ? 'Zatvori meni' : 'Otvori meni');
+  }
+  btn.addEventListener('click', () => set(!open));
+  backdrop.addEventListener('click', () => set(false));
+  links.forEach(a => a.addEventListener('click', () => set(false)));
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && open) set(false);
+  });
+})();
+
+// ═════ Superposition — BAD example (dissonance / beats) ═════
+(function() {
+  const c = document.getElementById('superposBad');
+  if (!c) return;
+  const ctx = c.getContext('2d');
+  const W = c.width, H = c.height;
+  const fa = 15, fb = 16; // bliske frekvencije → udari (mala sekunda ~16:15)
+  let t = 0;
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    ctx.strokeStyle = 'rgba(14,46,46,0.06)';
+    ctx.beginPath(); ctx.moveTo(0, H/2); ctx.lineTo(W, H/2); ctx.stroke();
+    function curve(freq, amp, color, yOff) {
+      ctx.strokeStyle = color; ctx.lineWidth = 1.4;
+      ctx.beginPath();
+      for (let x = 0; x <= W; x++) {
+        const y = H/2 + yOff + Math.sin((x / W) * Math.PI * 2 * freq + t * 0.03) * amp;
+        if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+      }
+      ctx.stroke();
+    }
+    curve(fa, 15, 'rgba(30,139,137,0.5)', -72);
+    curve(fb, 15, 'rgba(194,90,74,0.5)', -72);
+    ctx.strokeStyle = C.crimson; ctx.lineWidth = 2.5;
+    ctx.beginPath();
+    for (let x = 0; x <= W; x++) {
+      const a = Math.sin((x / W) * Math.PI * 2 * fa + t * 0.03) * 26;
+      const b = Math.sin((x / W) * Math.PI * 2 * fb + t * 0.03) * 26;
+      const y = H/2 + 52 + (a + b);
+      if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+    ctx.font = 'italic 14px Fraunces';
+    ctx.fillStyle = C.teal; ctx.fillText('f₁ — 15 ciklusa', 12, H/2 - 100);
+    ctx.fillStyle = C.crimson; ctx.fillText('f₂ — 16 ciklusa (bliska)', 165, H/2 - 100);
+    ctx.fillStyle = C.crimson; ctx.fillText('zbir — udari, bez kratkog perioda', 12, H/2 + 112);
+    t++;
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+</script>
+
+</body>
+</html>
